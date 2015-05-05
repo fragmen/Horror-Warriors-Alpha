@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html class="no-js">
+    <head>
+        <title>HorrorWarriors</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="styles/HomeLayout.css">
+        <link rel="stylesheet" href="styles/common.css">
+    </head>
+        
+    <body ng-app="horrorWarriorApp">
+     <nav id="navcontainer">   
+        <ul>
+            <li><a ng-href="#/login">login</a></li><li><a ng-href="#/logon">logon</a></li>
+            <li ng-show="esMaster"><a  ng-href="#/createMaps">Crear Mapa</a></li>
+            <li ng-show="esMaster"><a ng-href="#/createBeast">Crear Besties</a></li>
+            <li ng-show="esMaster"><a ng-href="#/listBeast">llista de Besties</a></li>
+            <li ng-show="esJugador"><a ng-href="#/createHeroe">Crear Herois</a></li>
+            <li ng-show="esMaster"><a href="PartyLayout.html">Menu de Partides</a></li>
+            <li ng-show="esJugador"><a href="PartyLayout.html">Menu de Partides</a></li>
+            
+            
+        </ul>
+     </nav>
+         <div ng-view="" id="dinamyc"></div>
+    </body>
+        <script src="scripts/angular_min.js"></script>
+        <script src="scripts/angular-route.min.js"></script>
+        <script src="scripts/homeApp.js"></script>
+        <script src="scripts/jquery.js"></script>
+ 
+        <!-- Home -->
+        <script src="scripts/controllers/home/logon.js"></script>
+        <script src="scripts/controllers/home/login.js"></script>
+        <script src="scripts/controllers/home/meuEspai.js"></script>
+        <!--CRUD BESTIES NOMES MASTER -->
+        <script src="scripts/controllers/maps/createMaps.js"></script>
+        <script src="scripts/controllers/beast/createBeast.js"></script>
+        <script src="scripts/controllers/beast/listBeast.js"></script>
+        <!--CRUD HEROIS NOMES JUGADORS -->
+        
+        <script src="scripts/controllers/heroes/createHeroe.js"></script>
+        <script src="scripts/controllers/heroes/listHeroes.js"></script>
+    
+        <script src="scripts/cookies.js"></script>
+        
+</html>

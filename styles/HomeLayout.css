@@ -1,0 +1,129 @@
+
+#sec_login{
+    background-image: url(../images/main/logo_in_3_1.png);
+    
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex; 
+    
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4);
+     width:  750px;
+     
+     height: 725px;
+}
+/*En cada vista.html que fem , seria necessari encavir-ho en un section id de aquest tipus, per centra-ho be*/
+
+#sec_editor{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex; 
+    
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 5, 0.4);
+     min-width:  750px;
+     max-width:auto;
+     height: 725px;	
+     color:white;
+     
+}
+#artic_login{
+    width: 200px;
+    height: 125px;
+    text-align: center;
+    color: black;
+    margin-top: 425px;
+}
+
+input{
+    width: 150px;
+    height: 25px;
+}
+input[type=checkbox]{
+    margin-left: 10px;
+}
+input[type=submit]{
+    width: 40px;
+    height: 35px;
+}
+input[type=checkbox]{
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  padding: 10px;
+  width: auto;
+  height: auto;
+}
+
+.banqueta{
+    font-family: Arial;
+    font-size: 1em;
+    background-color: #46b8da;
+    color:white;
+    width:300px;
+    
+}
+#dinamyc{
+margin-top:10em;
+}
+#navcontainer{
+	text-align:center;
+	margin-top:5%;
+	margin-left:auto;
+	margin-right:auto;
+	position:absolute;
+	min-width:750px;
+	max-width:auto;
+	height:50px;
+	background-color: rgba(0, 0, 0, 0.4);
+	display:block;
+}
+#navcontainer ul
+{
+margin: 0;
+padding: 0;
+list-style-type: none;
+text-align: center;
+padding-top:1em;
+}
+
+	#navcontainer ul li { display: inline; margin-left:2em; }
+
+		#navcontainer ul li a
+		{
+			text-decoration: none;
+			padding: .2em 1em;
+			color: #fff;
+			background-color: #036;
+		}
+
+		#navcontainer ul li a:hover
+		{
+			color: #fff;
+			background-color: #369;
+		}
+
+// taules es la classe temporal que he fet utilitzada en les taules de crear besties y herois
+
+.taula{
+	color:white;
+		
+}
+h1{
+	color:white;
+}
+h3{
+	color:green;
+}
+

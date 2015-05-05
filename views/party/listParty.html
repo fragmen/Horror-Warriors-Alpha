@@ -1,0 +1,35 @@
+<section id="sec_editor">
+    <table id="parties_list">
+        <tr>
+            <td>Nom</td><td>Jugadors</td><td>Idioma</td><td>Protegida</td>
+        </tr> 
+        <tr ng-repeat="resp in response['data']">
+            <td> {{resp.nom}}</td><td>{{resp.maxper}}</td>{{resp.online}}</td><td>{{resp.nick}}<td>Entrar!</td>	
+        </tr>
+    </table>
+    <article id="artic_filter">
+        <div class="div_article_filter">
+            <table id="filters_list">
+                <tr>
+                    <td>Nom</td>
+                    <td><input type="text" size="8"></td>
+                </tr>
+                <tr>
+                    <td>Not full</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>Not empty</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>Not password</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="div_article_filter">
+            <button id="join">JOIN</button>
+        </div>               
+    </article>
+</section>

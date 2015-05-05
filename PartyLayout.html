@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>HorrorWarriors</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+        <link rel="stylesheet" href="styles/PartyLayout.css">
+        <link rel="stylesheet" href="styles/common.css">
+    </head>
+    <body ng-app="horrorWarriorParty">
+        <header class="header">
+            <section id="principal">
+                <article class="article_heder"></article>
+                <article class="article_heder" id="article_menu">
+                    <img src="../img/logo.png" class="logo" alt="logo Horror Warriors">
+                </article>
+                <article class="article_heder">
+                    <button id="menu_button">Menu</button>
+                </article>
+            </section>
+            <section id="provisional_menu">
+                <nav id="navcontainer">   
+                    <ul>
+                        <li><a  ng-href="#/createParty">Crear Partida</a></li>
+                        <li ng-show="esJugador"><a ng-href="#/listParty">Llista de Partides</a></li>
+                        <li ng-show="esMaster"><a href="index.html">Menu Princial</a></li>
+                    </ul>
+                </nav>
+            </section>
+        </header>
+        <section ng-view="" id="party_list_section"></section>
+    </body>
+
+        <script src="scripts/angular_min.js"></script>
+        <script src="scripts/angular-route.min.js"></script>
+        <script src="scripts/partyApp.js"></script>
+        <script src="scripts/jquery.js"></script>
+ 
+        <!-- Party -->
+        <script src="scripts/controllers/party/sessioParty.js"></script>
+        <script src="scripts/controllers/party/createParty.js"></script>
+        <script src="scripts/controllers/party/viewParty.js"></script>
+        <script src="scripts/controllers/party/listParty.js"></script>
+        <script src="scripts/controllers/party/createCombat.js"></script>
+		<!-- altres -->
+        <script src="scripts/cookies.js"></script>
+        
+</html>

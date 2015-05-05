@@ -1,0 +1,60 @@
+
+        <div><h1>Crea les besties!</h1></div>
+        <h3>{{response["msg"]}}</h3>
+        <section class="taules">
+            <table>
+            <tr>
+                <td>Avatar:</td><td>
+                    <select ng-model="avatar" ng-change="tipus_bestia()">
+                        <option value="Avatar_Abominacio.jpg">Abominació</option>
+                        <option value="Avatar_Golem_Magma.jpg">Golem de Magma</option>
+                        <option value="Avatar_Home_Llop.jpg">Home Llop</option>
+                        <option value="Avatar_Orc_Guerrer.jpg">Orc Guerrer</option>
+                        <option value="Avatar_Orc_Mag.jpg">Orc Mac</option>
+                        <option value="Avatar_Orc_Rang.jpg">Orc Rager</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Nom bestia:</td><td><input type="text" ng-model="nom"></td>
+            </tr>
+            
+                <td><input type="button" ng-click="save()" value="Guardar"></td>
+            </tr>
+            <tr>
+                <td><img src="/dist/images/beast/img/{{avatar}}" width="200px" height="200px" ng-init="avatar='Avatar_Abominacio.jpg'"></td>
+            </tr>
+        </table>
+        </section>
+        <section class="taules">
+        <table>
+            <tr>
+                <td>Vida:</td><td><input type="text" value=5 size="5" ng-model="live"></td>
+                
+            </tr>
+            <tr>
+                <td>Força:</td><td><input type="text" value=5 size="5" ng-model="force"></td>
+            </tr>
+            <tr>
+                <td>Agilitat:</td><td><input type="text" value=2 size="5" ng-model="agility"></td>
+            </tr>
+            <tr>
+                <td>Defensa:</td><td><input type="text" value=5 size="5" ng-model="defense"></td>
+            </tr>
+                                 
+            
+            </table>
+        </section>
+        <section class="taules">
+        <div id="bestiari">
+            
+            <table border=1 class="banqueta">
+                
+            <caption>ELS TESU MONSTRES</caption>
+            
+            <tr ng-repeat="resp in response['data']">
+                <td>{{resp['nom']}} </td><td><p ng-click="eliminarBestia()">eliminar</p></td>
+            </tr>
+            </table>
+        </div>
+        </section>

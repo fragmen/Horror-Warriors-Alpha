@@ -1,0 +1,55 @@
+
+<div><h1>Menu de creació de mapes</h1></div>
+<section class="taules">
+<table>
+    <tr>
+        <td>Nom del Mapa :</td><td><input type="text" ng-model="mapName"></td>
+        {{response["status"]}}
+        {{response["msg"]}}
+    </tr>
+    <tr>
+                <td>Columnes "caselles"</td>
+                <td>
+                    <select ng-model="col">
+                        <option value=10>10</option>
+                        <option value=15>15</option>
+                        <option value=20>20</option>
+                    </select>
+                        
+                </td>               
+    </tr>
+    <tr>
+                
+                <td>Files "caselles"</td>
+                <td>
+                    <select ng-model="fil">
+                        <option value=10>10</option>
+                        <option value=15>15</option>
+                        <option value=20>20</option>       
+                    </select> 
+                </td>
+    
+    <tr>
+        <td>Background : </td>
+        <td>
+            <select  ng-model="background" ng-change="canvasReady()">
+                <option value="forest.jpg" selected="selected">Forest</option>
+                <option value="desert.jpg">Desert</option>
+                <option value="dungeon.jpg">Dungeon</option>
+                
+            </select>
+        </td><td><input type="button" value="Previsualitzar" ng-click="canvasReady()"></td>
+    </tr>
+     </tr>
+    <tr><td><input type="button" ng-click="saveMap()" value="Guardar Mapa"></td>
+    </tr> 
+    <tr>
+        <td>
+            <img src="/dist/images/backgrounds/{{background}}" width="200px" height="200px" ng-init="background='forest.jpg'"></img>
+        </td>
+    </tr>
+</table>
+</section>
+<section class="taules" ng-init="canvasReady()">
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;" ng-style="{'background-image':'url(/dist/images/backgrounds/{{fons}})'}"></canvas>
+</section>

@@ -1,0 +1,62 @@
+
+#sec_login{
+    background-image: url(../images/main/logo_in_3_1.png);
+    
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex; 
+    
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
+    
+     width:  750px;
+     height: 725px;
+}
+
+#artic_login{
+    width: 200px;
+    height: 125px;
+    text-align: center;
+    color: black;
+    margin-top: 425px;
+}
+
+input{
+    width: 150px;
+    height: 25px;
+}
+input[type=checkbox]{
+    margin-left: 10px;
+}
+input[type=submit]{
+    width: 40px;
+    height: 35px;
+}
+input[type=checkbox]{
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  padding: 10px;
+  width: auto;
+  height: auto;
+}
+
+.banqueta{
+    font-family: Arial;
+    font-size: 1em;
+    background-color: #46b8da;
+    color:black;
+    width:300px;
+}
+#dinamyc{
+    position:relative;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top:10em;
+    display: block;
+}
