@@ -1,0 +1,8 @@
+<section id="sec_editor">
+    <table>
+        <caption>Partida {{request["data"].nom}}</caption>
+        <tr ng-repeat="resp in response['data'].jugadors">
+            <td>{{resp["id"]}}</td>
+        </tr>    
+    </table>
+</section>

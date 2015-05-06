@@ -21,5 +21,19 @@ angular.module('horrorWarriorParty')
     		})
     	}
     	setInterval($scope.refreix, 1000);
+        $self.joinParty = function(nom,master){
+            $scope.id = readCookie("id")
+            $http.post("../api/joinParty",{nom:nom, id_jugador:$scope.id})
+                .success(function (){
+                    $scope.response = (JSON.parse(data));
+                    alert($scope.response["msg"]);
+                    $location.path("viewParty");
+                })
+                .error(function (){
+                    $scope.response = (JSON.parse(data));
+                    alert($scope.resposne["msg"]);
+                    
+                })
+        }
   });
   
