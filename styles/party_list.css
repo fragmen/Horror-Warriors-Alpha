@@ -1,31 +1,34 @@
 /*Section*/
-#list_section{
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: flex;
-    
-    -webkit-justify-content: center;
-    -moz-flex-justify-content: center;
-    -ms-justify-content: center;
-    justify-content: center;
-    
-    -webkit-flex-direction: row;
-    -moz-flex-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    
-    margin-top: 75px;
-    margin-bottom: 75px;
+#party_list_section{
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: flex;
+  
+  -webkit-justify-content: center;
+  -moz-flex-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  
+  -webkit-flex-direction: row;
+  -moz-flex-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  
+  margin-top: 25px;
+  margin-bottom: 75px;
+  color: whitesmoke;
+  width: 1000px;
+  height: auto;
 }
-#parties_list{
+#party_parties_list{
     width: 500px;
     height: 500px;
     color: white; 
     text-align: center;
 }
 
-#artic_filter{
+#party_artic_filter{
     display: -ms-flexbox;
     display: -webkit-flex;
     display: -moz-flex;
@@ -47,13 +50,13 @@
     
     margin-left: 50px;
 }
-#filters_list{
+#party_filters_list{
     width: 300px;
     height: 250px;
     color: white; 
 }
 
-.div_article_filter{
+.party_div_article_filter{
     display: -ms-flexbox;
     display: -webkit-flex;
     display: -moz-flex;
@@ -85,4 +88,8 @@ button{
 #join{
     height: 30px;
     width: 75px;
+}
+#party_list_t_header{
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 75px;
 }

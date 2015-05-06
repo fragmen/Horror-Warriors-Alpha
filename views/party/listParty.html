@@ -1,15 +1,15 @@
-<section id="sec_editor">
-    <table id="parties_list">
-        <tr>
-            <td>Nom</td><td>Jugadors</td><td>Idioma</td><td>Protegida</td>
+<section id="party_list_section">
+    <table id="party_parties_list">
+        <tr id="party_list_t_header">
+            <td>Nom</td><td>Jugadors</td><td>Online</td><td>Master</td><td></td>
         </tr> 
         <tr ng-repeat="resp in response['data']">
-            <td> {{resp.nom}}</td><td>{{resp.maxper}}</td><td>{{resp.online}}</td><td>{{resp.master}}</td><td>Entrar!</td>	
+            <td>{{resp.nom}}</td><td>{{resp.maxper}}</td><td>{{resp.online}}</td><td>{{resp.master}}</td><td>Entrar!</td>	
         </tr>
     </table>
-    <article id="artic_filter">
-        <div class="div_article_filter">
-            <table id="filters_list">
+    <article id="party_artic_filter">
+        <div class="party_div_article_filter">
+            <table id="party_filters_list">
                 <tr>
                     <td>Nom</td>
                     <td><input type="text" size="8"></td>
@@ -28,7 +28,7 @@
                 </tr>
             </table>
         </div>
-        <div class="div_article_filter">
+        <div class="party_div_article_filter">
             <button id="join">JOIN</button>
         </div>               
     </article>
