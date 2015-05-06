@@ -23,32 +23,7 @@ padding-top:1em;
 }
              
 /*Section*/
-#party_list_section{
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: flex;
-    
-    -webkit-justify-content: center;
-    -moz-flex-justify-content: center;
-    -ms-justify-content: center;
-    justify-content: center;
-    
-    -webkit-flex-direction: row;
-    -moz-flex-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    
-    margin-top: 75px;
-    margin-bottom: 75px;
-    color: whitesmoke;
-}
-#party_list_parties_list{
-    width: 500px;
-    height: 500px;
-    color: white; 
-    text-align: center;
-}
+
 
 #party_list_artic_filter{
     display: -ms-flexbox;

@@ -8,6 +8,8 @@
     display: -webkit-flex;
     display: flex; 
     
+    flex-direction: colum;
+        
     -webkit-justify-content: center;
     -moz-justify-content: center;
     -ms-justify-content: center;
@@ -30,9 +32,10 @@
     -moz-justify-content: center;
     -ms-justify-content: center;
     justify-content: center;
+    
     background-color: rgba(0, 0, 5, 0.4);
+    
      min-width:  750px;
-     max-width:auto;
      height: 725px;	
      color:white;
      
@@ -75,20 +78,62 @@ input[type=checkbox]{
     
 }
 #dinamyc{
-margin-top:10em;
+ display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex; 
+    
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    
+     -webkit-flex-flow: row;
+    -moz-flex-flow: row;
+    -ms-flex-flow: row;
+    flex-flow: row;
+    
+     -webkit-justify-content:  space-around;
+    -moz-justify-content:  space-around;
+    -ms-justify-content:  space-around;
+    justify-content:  space-around;
+    
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
 }
 #navcontainer{
-	text-align:center;
-	margin-top:5%;
-	margin-left:auto;
-	margin-right:auto;
-	position:absolute;
-	min-width:750px;
-	max-width:auto;
-	height:50px;
-	background-color: rgba(0, 0, 0, 0.4);
-	display:block;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex; 
+    
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    
+     -webkit-flex-flow: row;
+    -moz-flex-flow: row;
+    -ms-flex-flow: row;
+    flex-flow: row;
+    
+     -webkit-justify-content:  space-around;
+    -moz-justify-content:  space-around;
+    -ms-justify-content:  space-around;
+    justify-content:  space-around;
+    
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    
+    height: 75px
 }
+
 #navcontainer ul
 {
 margin: 0;
@@ -127,3 +172,6 @@ h3{
 	color:green;
 }
 
+#Herou_title{
+    height: 35px;
+}
