@@ -1,0 +1,320 @@
+*{
+    border: 1px solid gold;
+}
+#hereoes_main_sec{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+
+    -webkit-justify-content: space-around;
+    -moz-flex-justify-content: space-around;
+    -ms-justify-content: space-around;
+    justify-content: space-around;
+
+    -webkit-flex-direction: row;
+    -moz-flex-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    
+    background-color: rgba(0, 0, 0, 0.4);
+    
+    
+}
+    #heroes_personatje{
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: flex;
+
+        -webkit-justify-content: center;
+        -moz-flex-justify-content: center;
+        -ms-justify-content: center;
+        justify-content: center;
+
+        -webkit-flex-direction: row;
+        -moz-flex-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        
+        flex-wrap: wrap;
+        
+        height: 750px;
+        width: 500px;
+    }
+        #heroes_personatje_nom{
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: flex;
+
+            -webkit-justify-content: center;
+            -moz-flex-justify-content: center;
+            -ms-justify-content: center;
+            justify-content: center;
+
+            -webkit-flex-direction: row;
+            -moz-flex-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            
+            -webkit-align-items: center;
+            -moz-ems: center;
+            -ms-align-items: center;
+            align-items: center;
+            
+            width: 450px;
+            height: 100px;
+            
+
+        }
+            #heroes_personatje_nom_nikname{
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: flex;
+
+                -webkit-justify-content: center;
+                -moz-flex-justify-content: center;
+                -ms-justify-content: center;
+                justify-content: center;
+                
+                -webkit-align-items: center;
+                -moz-ems: center;
+                -ms-align-items: center;
+                align-items: center;
+                
+                width: 75px;
+                height: 35px;
+            }
+        #heroes_personatje_foto{
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: flex;
+
+            -webkit-justify-content: center;
+            -moz-flex-justify-content: center;
+            -ms-justify-content: center;
+            justify-content: center;
+
+            -webkit-flex-direction: row;
+            -moz-flex-flex-direction: row;
+            -ms-flex-direction: row;
+            
+            -webkit-align-items: center;
+            -moz-ems: center;
+            -ms-align-items: center;
+            align-items: center;
+            
+            width: 450px;
+            height: 200px;
+
+        }
+            #heroes_personatje_foto_avatar{
+                width: 150px;
+                height: 150px;
+            }
+        #heroes_personatje_info{
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: flex;
+
+            -webkit-justify-content: space-around;
+            -moz-flex-justify-content: space-around;
+            -ms-justify-content: space-around;
+            justify-content: space-around;
+
+            -webkit-flex-direction: row;
+            -moz-flex-flex-direction: row;
+            -ms-flex-direction: row;
+            
+            -webkit-align-items: center;
+            -moz-ems: center;
+            -ms-align-items: center;
+            align-items: center;
+            
+            width: 450px;
+            height: 75px;
+        }
+            .heroes_personatje_info_stats{
+                width: 75px;
+                height: 35px;
+
+            }
+        #heroes_personatje_lvl{
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: flex;
+
+            -webkit-justify-content: space-around;
+            -moz-flex-justify-content: space-around;
+            -ms-justify-content: space-around;
+            justify-content: space-around;
+
+            -webkit-flex-direction: row;
+            -moz-flex-flex-direction: row;
+            -ms-flex-direction: row;
+            
+            -webkit-align-items: center;
+            -moz-ems: center;
+            -ms-align-items: center;
+            align-items: center;
+            
+            width: 450px;
+            height: 75px;
+        }
+            #heroes_personatje_lvl_punts{
+                width: 75px;
+                height: 35px;
+            }
+            #heroes_personatje_lvl_nivell{
+                width: 75px;
+                height: 35px;
+            }
+        #heroes_personatje_atributs{
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: flex;
+
+            -webkit-justify-content: space-around;
+            -moz-flex-justify-content: space-around;
+            -ms-justify-content: space-around;
+            justify-content: space-around;
+
+            -webkit-flex-direction: row;
+            -moz-flex-flex-direction: row;
+            -ms-flex-direction: row;
+            
+            -webkit-align-items: center;
+            -moz-ems: center;
+            -ms-align-items: center;
+            align-items: center;
+            
+            width: 450px;
+            height: 75px;
+        }
+            .heroes_personatje_atrinuts_atri{
+                width: 75px;
+                height: 35px;
+            }
+    #heroes_list{    
+        height: 750px;
+        width: 500px;
+    }
+        #heroes_list_sec_1{
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: flex;
+
+            -webkit-justify-content: space-around;
+            -moz-flex-justify-content: space-around;
+            -ms-justify-content: space-around;
+            justify-content: space-around;
+
+            -webkit-flex-direction: row;
+            -moz-flex-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            
+            webkit-align-items: center;
+            -moz-ems: center;
+            -ms-align-items: center;
+            align-items: center;
+    
+            height: 500px;
+            width: 500px;
+        }
+            #heroes_list_sec_1_0{
+                background-color: rgba(0, 0, 0, 0.6);
+                box-shadow: 10px 10px 5px black;
+                
+                text-align: center;
+                color: whitesmoke;
+                height: 450px;
+                width: 350px;
+                
+                border: none;
+            }
+                .heroes_list_sec_1_0_{
+                    display: -webkit-flex;
+                    display: -moz-flex;
+                    display: flex;
+
+                    -webkit-justify-content: space-around;
+                    -moz-flex-justify-content: space-around;
+                    -ms-justify-content: space-around;
+                    justify-content: space-around;
+
+                    -webkit-flex-direction: row;
+                    -moz-flex-flex-direction: row;
+                    -ms-flex-direction: row;
+
+                    -webkit-align-items: center;
+                    -moz-ems: center;
+                    -ms-align-items: center;
+                    align-items: center;
+                    
+                    width: 325px;
+                    height: 75px;
+                    
+                }
+        #heroes_list_sec_2{
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: flex;
+
+            -webkit-justify-content: space-around;
+            -moz-flex-justify-content: space-around;
+            -ms-justify-content: space-around;
+            justify-content: space-around;
+
+            -webkit-flex-direction: row;
+            -moz-flex-flex-direction: row;
+            -ms-flex-direction: row;
+            
+            -webkit-align-items: center;
+            -moz-ems: center;
+            -ms-align-items: center;
+            align-items: center;
+            
+            height: 250px;
+            width: 500px;
+        }
+            #heroes_list_sec_2_0{
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: flex;
+
+                -webkit-justify-content: space-around;
+                -moz-flex-justify-content: space-around;
+                -ms-justify-content: space-around;
+                justify-content: space-around;
+
+                -webkit-flex-direction: row;
+                -moz-flex-flex-direction: row;
+                -ms-flex-direction: row;
+
+                -webkit-align-items: center;
+                -moz-ems: center;
+                -ms-align-items: center;
+                align-items: center;
+            
+                color: whitesmoke;
+                background-color: black;
+                border: none;
+                height: 35px;
+                width: 100px;
+                font-size: 18px;
+                border-radius: 5px;
+            }
+    
+   
+#hereoes_main_sec input{
+    outline:none;
+    background: transparent;
+
+    width: 75px;
+    height: 35px;
+    color: whitesmoke;
+}

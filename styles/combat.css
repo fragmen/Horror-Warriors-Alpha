@@ -1,0 +1,280 @@
+#main{
+    margin-top: 25px;
+}
+
+combat_section{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    
+    -webkit-flex-direction: colum;
+    -moz-flex-direction: colum;
+    -ms-flex-direction: colum;
+    flex-direction: colum;
+    
+    webkit-justify-content:  space-around;
+    -moz-justify-content:  space-around;
+    -ms-justify-content:  space-around;
+    justify-content:  space-around;
+}
+
+/*torns*/
+#combat_art_torns{
+    width: 790px;
+    height: 75px;
+}
+#combat_shift_list{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    
+    width: 999px;
+    height: 75px;
+    
+    color: whitesmoke;
+}
+.combat__shift_list_player{
+    background: url('../images/players/cara_guerrero.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 99px;
+    height: 74px;
+}
+
+
+/*taulell*/
+#combat_art_taulell{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    
+    width: 1000px;
+    height: 400px;
+}
+/*taulell_centre*/
+#combat_taulell{
+    width: 850px;
+    height: 400px;
+}
+/*taulell_personal_info*/
+#combat_personal_info{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+
+    flex-direction: row;
+    
+    flex-wrap: wrap;
+        
+    -webkit-justify-content:  space-around;
+    -moz-justify-content:  space-around;
+    -ms-justify-content:  space-around;
+    justify-content:  space-around;
+   
+    width: 200px;
+    height: 350px;
+}
+/*taulell_personal_info_avatar*/
+#combat_pers_info_foto{
+
+}
+#combat_personal_info_pj_name{
+    width: 148px;
+    height: 20px;
+    color: whitesmoke;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 2px 2px 1px black;
+    text-align: center; 
+}
+#combat_pers_info_avatar{
+    background: url('../images/players/cara_guerrero.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    width: 150px;
+    height: 100px;
+    margin-top: 5px;
+    
+}
+/*taulell_personal_info_atributs*/
+#combat_pers_info_atributs{
+    margin-top: 15px;
+}
+.combat_pers_info_atributs{
+    width: 150px;
+    height: 20px;
+    color: whitesmoke;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 2px 2px 1px black;
+    text-align: center;
+}
+/*taulell_personal_info_menu*/
+#combat_pers_info_action_menu{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    
+    -webkit-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    
+    -webkit-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    
+    -webkit-justify-content:  space-around;
+    -moz-justify-content:  space-around;
+    -ms-justify-content:  space-around;
+    justify-content:  space-around;
+    
+    margin-top: 15px;
+}
+.combat_pers_info_action_menu_button{
+    width: 85px;
+    height: 20px;
+    color: whitesmoke;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 2px 2px 1px black;
+    text-align: center;
+}
+
+
+/*info*/
+#combat_art_info{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    
+    align-items: center;
+    
+    width: 1000px;
+    height: 190px;
+}
+/*info_group*/
+#combat_art_info_group{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    
+    align-items: center;
+    
+    width: 650px;
+    height: 175px;
+    
+     background-color: rgba(0, 0, 0, 0.4);
+    box-shadow: 2px 2px 1px black;
+    text-align: center;
+}
+/*info_group_player*/
+.combat_art_info_group_player{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    
+    flex-wrap: wrap;
+    
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    
+    -webkit-justify-content:  center;
+    -moz-justify-content:  center;
+    -ms-justify-content:  center;
+    justify-content:  center;
+    
+    width: 135px;
+    height: 175px;
+}
+/*info_group_foto*/
+.combat_art_info_group_player_foto{
+    width: 115px;
+    height: 125px;
+}
+.combat_art_info_group_player_foto_pj_name{
+    color: whitesmoke;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 2px 2px 1px black;
+    text-align: center;
+}
+.combat_art_info_group_player_foto_avatar{
+    background: url('../images/players/cara_guerrero.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    width: 115px;
+    height: 100px;
+}
+/*info_group_atributs*/
+.combat_art_info_group_player_atributs{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    
+    -webkit-justify-content:  center;
+    -moz-justify-content:  center;
+    -ms-justify-content:  center;
+    justify-content:  center;
+    
+    flex-wrap: wrap;
+    
+    width: 115px;
+    height: 45px;
+}
+.combat_art_info_group_player_atribut{
+    width: 100px;
+    height: 20px;
+
+    color: whitesmoke;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 2px 2px 1px black;
+    text-align: center;
+}
+
+/*info_log*/
+#combat_art_info_log{
+    width: 345px;
+    height: 175px; 
+    
+    margin-left: 15px;
+    color: whitesmoke;
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: 2px 2px 1px black;
+    text-align: center;
+}
+

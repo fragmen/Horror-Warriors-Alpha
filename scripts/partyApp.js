@@ -18,7 +18,11 @@ function direccions($routeProvider){
                 controllerAs: "listPartyCtrl",
                 templateUrl: "views/party/listParty.html"
             })
-        
+        .when("/combat", {
+                controller: "combatCtrl",
+                controllerAs: "combatCtrl",
+                templateUrl: "views/party/combat.html"
+            })
         .otherwise({
         redirectTo: '/'
       })
