@@ -23,6 +23,11 @@ function direccions($routeProvider){
                 controllerAs: "combatCtrl",
                 templateUrl: "views/party/combat.html"
             })
+        .when("/viewParty", {
+            controller: "viewPartyCtrl",
+            controllerAs: "viewPartyCtrl",
+            templateUrl: "views/party/viewParty.html"
+        })
         .otherwise({
         redirectTo: '/'
       })

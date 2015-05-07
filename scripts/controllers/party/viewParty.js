@@ -7,7 +7,9 @@
  * # MainCtrl
  * Controller of the horrorWarriorApp
  */
-angular.module('horrorWarriorApp')
-  .controller('gameViewCtrl', function ($scope) {
+angular.module('horrorWarriorParty')
+  .controller('viewPartyCtrl', function ($scope) {
+      
+      
     
   });

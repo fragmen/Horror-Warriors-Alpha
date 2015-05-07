@@ -289,7 +289,7 @@ class HorrorWarriors:
             print(id,nom,pas,maxper,idioma)
             
             master = self.jugadors.find_one({"_id":ObjectId(id_jugador)})
-            self.partida.save({"id_master":id_jugador,"nom":nom, "pass":pas, "maxper":maxper, "idioma":idioma, "online":False})
+            self.partida.save({"id_master":id_jugador,"nom":nom, "pass":pas, "maxper":maxper,"cua":0, "idioma":idioma, "online":False})
             self.resposta["status"] = "OK"
             self.resposta["msg"] = """S'han guardat les dades d el apartida correctament"""
             return(json.dumps(self.resposta))
@@ -379,9 +379,54 @@ class HorrorWarriors:
             self.resposta["status"] = "Error"
             self.resposta["msg"] = "Les dades no s'han pogut consultar"
             return(json.dumps(self.resposta))
+    
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    def joinParty(self):
+        
+        self.resposta = {}
+        try:
+            dades_in = cherrypy.request.json
+            nom_p = str(dades_in["nom"])
+            id_jugador = str(dades_in["id_jugador"])
+            partida = self.partida.find_one({"nom":nom_p},{"_id":False})
+            jugadors_array = []
+            
+            if(int(partida["cua"]<int(partida["maxper"]))):
+                try:
+                    for part in partida["jugadors"]:
+                        part["id"]= str(part["id"])
+                        jugadors_array.append(part)             
+                except:
+                    
+                    partida["nom"] = str(partida["nom"])
+                    partida["online"] = str(partida["online"])
+                    partida["maxper"] = str(partida["maxper"])
+                    partida["pass"] = str(partida["pass"])
+                    idMaster = str(partida["id_master"])
+                    nomMaster = self.jugadors.find_one({"_id":ObjectId(idMaster)})
+                    nomMaster = str(nomMaster["nick"])
+                    cua = int(partida["cua"])
+                    cua = cua+1
+                    part["master"] = nomMaster
+                
+                    """Actualitzem el contador de cua de gent unida +1 i gravem les dades del jugador"""
+                    jugadors_array.append(id_jugador)  
+                
+                    self.partida.update({"nom":nom},{'$set':{"cua":cua}})
+                    self.partida.update({"nom":nom},{'$set':{"id_jugadors":jugadors_array}})
+                
+                    self.resposta["status"] = "OK"
+                    self.resposta["msg"] = "Unit a la partida correctament"
+                    self.resposta["data"] = partida
+            else:
+                self.resposta["status"] = "Error"
+                self.resposta["msg"] = "No queda lloc per la partida"
+                return(json.dumps(self.resposta))
+        except:
+            self.resposta["status"] = "Error"
+            self.resposta["msg"] = "Error a la funcio del webservice de joinParty"
+            return(json.dumps(self.resposta))
 
-
-
-
-
+        
 application = cherrypy.Application(HorrorWarriors(), script_name=None, config=None)

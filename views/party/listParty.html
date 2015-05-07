@@ -1,10 +1,11 @@
 <section id="party_list_section">
     <table id="party_parties_list">
-        <tr id="party_list_t_header">
-            <td>Nom</td><td>Jugadors</td><td>Online</td><td>Master</td><td></td>
+        <caption><font color="black">Llista de Partides</font></caption>
+        <tr align="center">
+            <td>Nom</td><td>Jugadors</td><td>Idioma</td><td>Master</td>
         </tr> 
         <tr ng-repeat="resp in response['data']">
-            <td>{{resp.nom}}</td><td>{{resp.maxper}}</td><td>{{resp.online}}</td><td>{{resp.master}}</td><td>Entrar!</td>	
+            <td> {{resp.nom}}</td><td>{{resp.maxper}}</td><td>{{resp.online}}</td><td>{{resp.master}}</td><td><button ng-click="joinParty(resp.nom)" id="join">JOIN</button></td>	
         </tr>
     </table>
     <article id="party_artic_filter">
@@ -28,8 +29,12 @@
                 </tr>
             </table>
         </div>
+<<<<<<< HEAD
+             
+=======
         <div class="party_div_article_filter">
             <button id="join">JOIN</button>
         </div>               
+>>>>>>> 0921da642a6baa141bae64c36b9ac748044646bc
     </article>
 </section>
