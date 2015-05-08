@@ -8,7 +8,7 @@
  * Controller of the horrorWarriorApp
  */
 angular.module('horrorWarriorParty')
-  .controller('listPartyCtrl', function ($scope, $http) {
+  .controller('listPartyCtrl', function ($scope, $http, $location) {
   		$scope.id_jugador = readCookie("id");
     	$scope.refreix = function (){
     		$http.get("../api/listParty")
@@ -30,7 +30,11 @@ angular.module('horrorWarriorParty')
                     .success(function (data){
                         $scope.response = (JSON.parse(data));
                         alert($scope.response["msg"]);
+                        if($scope.response["status"]=="Error3"){
+                            return 0;
+                        }else{
                         $location.path("viewParty");
+                        }
                     })
                     .error(function (data){
                         $scope.response = (JSON.parse(data));

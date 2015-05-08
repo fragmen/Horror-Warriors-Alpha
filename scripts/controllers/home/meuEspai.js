@@ -2,7 +2,7 @@
 
 
 angular.module('horrorWarriorApp')
-  .controller('meuEspaiCtrl', function ($scope, $rootScope, $http) {
+  .controller('meuEspaiCtrl', function ($scope, $rootScope, $http, $location) {
     $scope.nick = readCookie("nick");
     $scope.id = readCookie("id");
     var entrada = function(){ $http.post("../api/esMaster",{id:$scope.id}).
@@ -15,6 +15,7 @@ angular.module('horrorWarriorApp')
                 $rootScope.esMaster = false;
                 $rootScope.esJugador = true;
             }
+            $location.path("createHeroe");
       }).error(function (data){
 
             console.log("Error de conexio a la prova del master");

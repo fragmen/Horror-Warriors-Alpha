@@ -396,13 +396,13 @@ class HorrorWarriors:
             
             if(int(partida["cua"]<int(partida["maxper"]))):
                 try:
-                    i = 0
+                    
                     for part in partida["jugadors"]:
-                        if(str(part[i])==id_jugador):
-                            self.resposta["ststus"]= "OK"
+                        if(str(part)==id_jugador):
+                            self.resposta["status"]= "Error3"
                             self.resposta["msg"] = "El jugador ja esta inscrit amb anterioritat"
                             self.resposta["data"] = partida
-                            i = i+1
+                            
                             return(json.dumps(self.resposta))
                             
                         else:
