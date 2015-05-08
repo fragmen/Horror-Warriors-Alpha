@@ -8,7 +8,7 @@
  * Controller of the horrorWarriorApp
  */
 angular.module('horrorWarriorParty')
-  .controller('listPartyCtrl', function ($scope, $http) {
+  .controller('listPartyCtrl', function ($scope, $http, $location) {
   		$scope.id_jugador = readCookie("id");
     	$scope.refreix = function (){
     		$http.get("../api/listParty")
@@ -21,19 +21,29 @@ angular.module('horrorWarriorParty')
     		})
     	}
     	setInterval($scope.refreix, 1000);
-        $self.joinParty = function(nom,master){
-            $scope.id = readCookie("id")
-            $http.post("../api/joinParty",{nom:nom, id_jugador:$scope.id})
-                .success(function (){
-                    $scope.response = (JSON.parse(data));
-                    alert($scope.response["msg"]);
-                    $location.path("viewParty");
-                })
-                .error(function (){
-                    $scope.response = (JSON.parse(data));
-                    alert($scope.resposne["msg"]);
-                    
-                })
+        $scope.joinParty = function(nom,pass){
+            $scope.pass = prompt("Password:");
+            if($scope.pass == pass){
+                   
+                $scope.id = readCookie("id");
+                $http.post("../api/joinParty",{nom:nom, id_jugador:$scope.id})
+                    .success(function (data){
+                        $scope.response = (JSON.parse(data));
+                        alert($scope.response["msg"]);
+                        if($scope.response["status"]=="Error3"){
+                            return 0;
+                        }else{
+                        $location.path("viewParty");
+                        }
+                    })
+                    .error(function (data){
+                        $scope.response = (JSON.parse(data));
+                        alert($scope.resposne["msg"]);
+
+                    })
+                }else{
+                    alert("Error, la contrasenya no es correcta");
+                }
         }
   });
   

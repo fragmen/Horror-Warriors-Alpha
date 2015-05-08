@@ -289,7 +289,7 @@ class HorrorWarriors:
             print(id,nom,pas,maxper,idioma)
             
             master = self.jugadors.find_one({"_id":ObjectId(id_jugador)})
-            self.partida.save({"id_master":id_jugador,"nom":nom, "pass":pas, "maxper":maxper,"cua":0, "idioma":idioma, "online":False})
+            self.partida.save({"id_master":id_jugador,"nom":nom, "id_jugadors":0, "pass":pas, "maxper":maxper,"cua":0, "idioma":idioma, "online":False})
             self.resposta["status"] = "OK"
             self.resposta["msg"] = """S'han guardat les dades d el apartida correctament"""
             return(json.dumps(self.resposta))
@@ -382,6 +382,7 @@ class HorrorWarriors:
     
     @cherrypy.expose
     @cherrypy.tools.json_out()
+    @cherrypy.tools.json_in()
     def joinParty(self):
         
         self.resposta = {}
@@ -391,12 +392,23 @@ class HorrorWarriors:
             id_jugador = str(dades_in["id_jugador"])
             partida = self.partida.find_one({"nom":nom_p},{"_id":False})
             jugadors_array = []
+
             
             if(int(partida["cua"]<int(partida["maxper"]))):
                 try:
+                    
                     for part in partida["jugadors"]:
-                        part["id"]= str(part["id"])
-                        jugadors_array.append(part)             
+                        if(str(part)==id_jugador):
+                            self.resposta["status"]= "Error3"
+                            self.resposta["msg"] = "El jugador ja esta inscrit amb anterioritat"
+                            self.resposta["data"] = partida
+                            
+                            return(json.dumps(self.resposta))
+                            
+                        else:
+                            
+                            part["id"]= str(part["id"])
+                            jugadors_array.append(part)            
                 except:
                     
                     partida["nom"] = str(partida["nom"])
@@ -406,19 +418,23 @@ class HorrorWarriors:
                     idMaster = str(partida["id_master"])
                     nomMaster = self.jugadors.find_one({"_id":ObjectId(idMaster)})
                     nomMaster = str(nomMaster["nick"])
-                    cua = int(partida["cua"])
-                    cua = cua+1
-                    part["master"] = nomMaster
-                
-                    """Actualitzem el contador de cua de gent unida +1 i gravem les dades del jugador"""
-                    jugadors_array.append(id_jugador)  
-                
-                    self.partida.update({"nom":nom},{'$set':{"cua":cua}})
-                    self.partida.update({"nom":nom},{'$set':{"id_jugadors":jugadors_array}})
-                
+                    
+                    cua = int(partida["cua"]+1)
+                    partida["master"] = nomMaster
+                                        
+                    jugadors_array.append(str(id_jugador))  
+                    partida["jugadors"] = jugadors_array
+
+                    
+                    self.partida.update({"nom":nom_p},{'$set':{"cua":int(cua)}})
+                    
+                    self.partida.update({"nom":nom_p},{'$set':{"jugadors":jugadors_array}})
+                   
+                    
                     self.resposta["status"] = "OK"
                     self.resposta["msg"] = "Unit a la partida correctament"
                     self.resposta["data"] = partida
+                    return(json.dumps(self.resposta))
             else:
                 self.resposta["status"] = "Error"
                 self.resposta["msg"] = "No queda lloc per la partida"
