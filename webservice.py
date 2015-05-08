@@ -233,11 +233,12 @@ class HorrorWarriors:
         try:
             dades_in = cherrypy.request.json
             id_jugador = str(dades_in["id_jugador"])
-            heroes = self.heroes.find({"id_jugador":id_jugador},{"nom":1, "_id":False})
+            heroes = self.heroes.find({"id_jugador":id_jugador},{"nom":1})
             heroes_array = []
 
             for hero in heroes:
                 hero["nom"] = str(hero["nom"])
+                hero["_id"] = str(hero["_id"])
                 heroes_array.append(hero)
 
             self.resposta["status"] = "Ok"
@@ -248,7 +249,30 @@ class HorrorWarriors:
             self.resposta["status"] = "Error"
             self.resposta["msg"] = """No tens encara cap Heroi disponible!"""
             return(json.dumps(self.resposta))
-
+        
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    @cherrypy.tools.json_in()
+    def loadHeroe(self):
+        self.resposta = {}
+        try:
+            dades_in = cherrypy.request.json
+            id_heroe = str(dades_in["id_heroe"])
+            
+            heroes = self.heroes.find_one({"_id":ObjectId(id_heroe)})
+            heroes["_id"] = str(heroes["_id"])
+            self.resposta["status"] = "OK"
+            self.resposta["msg"] = "Les dades del Heroe han carregat correctament"
+            self.resposta["data"] = heroes
+            return(json.dumps(self.resposta))
+            
+        except:
+            self.resposta["status"] = "Error"
+            self.resposta["msg"] = "Les dades del Heroe no es troben"
+            
+            return(json.dumps(self.resposta))
+        
+        
     @cherrypy.expose
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
@@ -257,11 +281,12 @@ class HorrorWarriors:
         try:
             dades_in = cherrypy.request.json
             id_jugador = str(dades_in["id_jugador"])
-            heroes = self.heroes.find({"id_jugador":id_jugador},{"_id":False})
+            heroes = self.heroes.find({"id_jugador":id_jugador})
             heroes_array = []
 
             for hero in heroes:
                 hero["nom"] = str(hero["nom"])
+                hero["id"] = str(hero["_id"])
                 heroes_array.append(hero)
 
             self.resposta["status"] = "Ok"
@@ -307,13 +332,14 @@ class HorrorWarriors:
         try:
             dades_in = cherrypy.request.json
             id_jugador = str(dades_in["id_jugador"])
-            partys = self.partida.find({"id_master":id_jugador},{"_id":False})
+            partys = self.partida.find({"id_master":id_jugador})
             partys_array = []
 
             for party in partys:
                 party["nom"] = str(party["nom"])
                 party["maxper"] = int(party["maxper"])
                 party["online"] = str(party["online"])
+                party["_id"] = str(party["_id"])
                 partys_array.append(party)
 
             self.resposta["status"] = "Ok"
@@ -357,10 +383,11 @@ class HorrorWarriors:
         self.resposta = {}
         try:
             valor = True
-            partides = self.partida.find({"online":True},{"_id":False})
+            partides = self.partida.find({"online":True})
             partides_array = []
             for part in partides:
                 part["nom"] = str(part["nom"])
+                part["_id"] = str(part["_id"])
                 part["online"] = str(part["online"])
                 part["maxper"] = str(part["maxper"])
                 part["pass"] = str(part["pass"])

@@ -99,7 +99,7 @@
                 </div>
   
                 <div class="heroes_list_sec_1_0_" ng-repeat="resp in response['data']">
-                    <img class="heroes_list_sec_1_0_foto" src="/dist/images/heroes/{{avatar}}">
+                    <img class="heroes_list_sec_1_0_foto" src="/dist/images/heroes/{{avatar}}" ng-click="loadHeroe(resp._id)">
                     <div class="heroes_list_sec_1_0_nikname">{{resp['nom']}}</div>
                 </div>
                 
