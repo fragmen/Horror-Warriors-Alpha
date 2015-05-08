@@ -18,18 +18,35 @@
   margin-top: 25px;
   margin-bottom: 75px;
   color: whitesmoke;
-  width: 1000px;
+  width: 100%;
   height: auto;
 }
 #party_parties_list{
-    
     color: white; 
     text-align: center;
 }
 #party_parties_list td{
-    width: 125px;
-    min-height: 75px;
+    width: 150px;
+    height: 75px; 
+    overflow:hidden
+}
+#party_parties_list button{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+
+    -webkit-justify-content: center;
+    -moz-flex-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
     
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-align-items: center;
+    align-items: center;
+    
+    color: white;
 }
 
 #party_artic_filter{
