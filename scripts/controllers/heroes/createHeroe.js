@@ -19,6 +19,19 @@ angular.module('horrorWarriorApp')
                     $scope.response = JSON.parse(data);
                 })
     }
+    $scope.loadHeroe = function(id_heroe){
+        $http.post('../api/loadHeroe',{id_heroe:id_heroe})
+            .success(function (data){
+                $scope.heroe = JSON.parse(data);
+                $scope.nom = $scope.heroe["data"].nom;
+                $scope.live = $scope.heroe["data"].live;
+                $scope.agility = $scope.heroe["data"].agility;
+                $scope.force = $scope.heroe["data"].force;
+            })
+            .error( function(data){
+                
+            })
+    }
    
    $scope.loadHeroes();
    
