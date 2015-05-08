@@ -4,6 +4,9 @@
 #hereoes_main_sec input{
     outline:none;
     background: transparent;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    box-shadow: 2px 2px 1px black;
 
     width: 75px;
     height: 35px;
@@ -102,6 +105,10 @@
             #heroes_personatje_nom_nikname input{
                 outline:none;
                 background: transparent;
+                
+                text-align: center;
+                background-color: rgba(0, 0, 0, 0.9);
+                box-shadow: 2px 2px 1px black;
 
                 width: 75px;
                 height: 35px;
@@ -279,7 +286,7 @@
                     -ms-align-items: center;
                     align-items: center;
                     
-                    width: 325px;
+                    width: 350px;
                     height: 75px;
                     
                 }
@@ -337,4 +344,4 @@
                 border-radius: 5px;
             }
 
-   
+  
