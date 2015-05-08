@@ -19,17 +19,14 @@ and open the template in the editor.
     <body ng-app="horrorWarriorApp">
     <section>
      <nav id="navcontainer">   
-        <ul>
-            <li><a ng-href="#/login">login</a></li><li><a ng-href="#/logon">logon</a></li>
-            <li ng-show="esMaster"><a  ng-href="#/createMaps">Crear Mapa</a></li>
-            <li ng-show="esMaster"><a ng-href="#/createBeast">Crear Besties</a></li>
-            <li ng-show="esMaster"><a ng-href="#/listBeast">llista de Besties</a></li>
-            <li ng-show="esJugador"><a ng-href="#/createHeroe">Crear Herois</a></li>
-            <li ng-show="esMaster"><a href="PartyLayout.html">Menu de Partides</a></li>
-            <li ng-show="esJugador"><a href="PartyLayout.html">Menu de Partides</a></li>
-            
-            
-        </ul>
+        <div><a ng-href="#/login">login</a></div>
+        <div><a ng-href="#/logon">logon</a></div>
+        <div ng-show="esMaster"><a  ng-href="#/createMaps">Crear Mapa</a></div>
+        <div ng-show="esMaster"><a ng-href="#/createBeast">Crear Besties</a></div>
+        <div ng-show="esMaster"><a ng-href="#/listBeast">llista de Besties</a></div>
+        <div ng-show="esJugador"><a ng-href="#/createHeroe">Crear Herois</a></div>
+        <div ng-show="esMaster"><a href="PartyLayout.html">Menu de Partides</a></div>
+        <div ng-show="esJugador"><a href="PartyLayout.html">Menu de Partides</a></div>            
      </nav>
          <div ng-view=""></div>
     </section>

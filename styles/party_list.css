@@ -22,10 +22,14 @@
   height: auto;
 }
 #party_parties_list{
-    width: 500px;
-    height: 500px;
+    
     color: white; 
     text-align: center;
+}
+#party_parties_list td{
+    width: 125px;
+    min-height: 75px;
+    
 }
 
 #party_artic_filter{

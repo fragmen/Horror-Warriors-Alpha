@@ -23,7 +23,7 @@ function direccions($routeProvider){
                 controllerAs: "combatCtrl",
                 templateUrl: "views/party/combat.html"
             })
-        .when("/viewParty", {
+        .when("/party", {
             controller: "viewPartyCtrl",
             controllerAs: "viewPartyCtrl",
             templateUrl: "views/party/viewParty.html"

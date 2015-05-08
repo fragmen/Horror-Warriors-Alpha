@@ -10,10 +10,10 @@
     
     flex-direction: colum;
         
-    -webkit-justify-content: center;
-    -moz-justify-content: center;
-    -ms-justify-content: center;
-    justify-content: center;
+    -webkit-justify-content: space-around;
+    -moz-justify-content: space-around;
+    -ms-justify-content: space-around;
+    justify-content: space-around;
     background-color: rgba(0, 0, 0, 0.4);
      width:  750px;
      
@@ -115,12 +115,7 @@ input[type=checkbox]{
     -moz-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
-    
-     -webkit-flex-flow: row;
-    -moz-flex-flow: row;
-    -ms-flex-flow: row;
-    flex-flow: row;
-    
+
      -webkit-justify-content:  space-around;
     -moz-justify-content:  space-around;
     -ms-justify-content:  space-around;
@@ -134,30 +129,47 @@ input[type=checkbox]{
     height: 75px
 }
 
-#navcontainer ul
-{
-margin: 0;
-padding: 0;
-list-style-type: none;
-text-align: center;
+#navcontainer div{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+
+    -webkit-justify-content: center;
+    -moz-flex-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
+
+    -webkit-flex-direction: row;
+    -moz-flex-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+
+    -webkit-align-items: center;
+    -moz-ems: center;
+    -ms-align-items: center;
+    align-items: center;
+    
+    flex-wrap: wrap;
+    
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
 
 }
+#navcontainer  a{
+    text-decoration: none;
+    padding: .2em 1em;
+    color: white;
+    background-color: #036;
+}
 
-	#navcontainer ul li { display: inline; margin-left:2em; }
-
-		#navcontainer ul li a
-		{
-			text-decoration: none;
-			padding: .2em 1em;
-			color: #fff;
-			background-color: #036;
-		}
-
-		#navcontainer ul li a:hover
-		{
-			color: #fff;
-			background-color: #369;
-		}
+#navcontainer a:hover{
+        color: black;
+        background-color: #369;
+}
 
 // taules es la classe temporal que he fet utilitzada en les taules de crear besties y herois
 
