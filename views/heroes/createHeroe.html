@@ -51,7 +51,7 @@
             <caption>ELS TESU HEROIS</caption>
             
             <tr ng-repeat="resp in response['data']">
-                <td>{{resp['nom']}} </td><td>eliminar</p></td>
+                <td>{{resp['nom']}} </td><td>eliminar</td>
             </tr>
             </table>
   
@@ -62,11 +62,13 @@
     <section id="heroes_personatje">
         <article id="heroes_personatje_nom">
             <p id="heroes_personatje_nom_nikname">
-                <input type="text" value="{{heroi.nom}}" ng-model="nom">
+               Nom Jugador: <input type="text" ng-model="nom" size="100">
             </p>
         </article>
         <article id="heroes_personatje_foto">
-            <div id="heroes_personatje_foto_avatar"></div>
+            <div id="heroes_personatje_foto_avatar">
+                <img src="/dist/images/heroes/{{avatar}}" width="200px" height="150px" ng-init="avatar='cara_guerrero.png'">
+            </div>
         </article>
         <article id="heroes_personatje_info">
             <p class="heroes_personatje_info_stats">{{heroi.dmg}}</p>
@@ -79,38 +81,28 @@
         </article>
         <article id="heroes_personatje_atributs">
             <p class="heroes_personatje_atrinuts_atri">
-                <input type="text" value="{{heroi.for}}">
+                Força:<input type="text" ng-model="force">
             </p>
             <p class="heroes_personatje_atrinuts_atri">
-                <input type="text" value="{{heroi.agi}}">
+                Agilitat:<input type="text" ng-model="agility">
             </p>
             <p class="heroes_personatje_atrinuts_atri">
-                <input type="text" value="{{heroi.cons}}">
+                Constitució:<input type="text" ng-model="live">
             </p>
         </article>
     </section>
     <section id="heroes_list">
         <section id="heroes_list_sec_1">
             <article id="heroes_list_sec_1_0">    
-                <div id="heroes_list_sec_1_0_1">
+                <div id="heroes_list_sec_1_0_1" >
                     <h2>Heroes list</h2>
                 </div>
-                <div class="heroes_list_sec_1_0_">
-                    <div class="heroes_list_sec_1_0_foto"></div>
-                    <div class="heroes_list_sec_1_0_nikname"> Fragmen</div>
+  
+                <div class="heroes_list_sec_1_0_" ng-repeat="resp in response['data']">
+                    <img class="heroes_list_sec_1_0_foto" src="/dist/images/heroes/{{avatar}}">
+                    <div class="heroes_list_sec_1_0_nikname">{{resp['nom']}}</div>
                 </div>
-                <div class="heroes_list_sec_1_0_">
-                    <div class="heroes_list_sec_1_0_foto"></div>
-                    <div class="heroes_list_sec_1_0_nikname">Albert</div>
-                </div>
-                <div class="heroes_list_sec_1_0_">
-                    <div class="heroes_list_sec_1_0_foto"></div>
-                    <div class="heroes_list_sec_1_0_nikname">Lu</div>
-                </div>
-                <div class="heroes_list_sec_1_0_">
-                    <div class="heroes_list_sec_1_0_foto"></div>
-                    <div class="heroes_list_sec_1_0_nikname">Jordi</div>
-                </div>
+                
             </article>
             
         </section>
