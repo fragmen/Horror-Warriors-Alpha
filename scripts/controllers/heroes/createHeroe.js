@@ -9,6 +9,18 @@
  */
 angular.module('horrorWarriorApp')
   .controller('createHeroeCtrl', function ($scope,$http) {
+    $scope.dropHeroe = function(id_heroe){
+       $http.post("../api/dropHeroe",{id_heroe:id_heroe})
+            .success( function(data){
+                $scope.response = JSON.parse(data);
+                alert($scope.response["msg"]);
+                $scope.loadHeroes();
+            })
+            .error( function(data){
+                self.response = JSON.parse(data);
+                alert($scope.response["msg"]);
+            })
+    }
     $scope.loadHeroes = function(){
         var id = readCookie("id");
         $http.post('../api/loadHeroes',{id_jugador:id})
@@ -37,13 +49,15 @@ angular.module('horrorWarriorApp')
    
     $scope.save = function(){
         var id = readCookie("id");
-        $http.post('../api/createHeroe',{id_jugador:id, avatar:$scope.avatar, nom:$scope.nom, live:$scope.live, force:$scope.force, agility:$scope.agility, defense:$scope.defense})
+        $http.post('../api/createHeroe',{id_jugador:id, avatar:$scope.avatar, nom:$scope.nom, live:$scope.live, force:$scope.force, agility:$scope.agility})
         .success(function(data) {
             $scope.response = JSON.parse(data);
+            alert($scope.response["msg"]);
             $scope.loadHeroes();
         })
         .error(function(data) {
             $scope.response = JSON.parse(data);
+            alert($scope.response["msg"]);
     });
     }
     

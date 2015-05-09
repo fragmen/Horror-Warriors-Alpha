@@ -11,11 +11,13 @@ angular.module('horrorWarriorApp')
             if(data["master"]==true){
                 $rootScope.esMaster = true;
                 $rootScope.esJugador = false;
+                
             }else if(data["master"]==false){
                 $rootScope.esMaster = false;
                 $rootScope.esJugador = true;
+                $location.path("createHeroe");
             }
-            $location.path("createHeroe");
+            
       }).error(function (data){
 
             console.log("Error de conexio a la prova del master");
