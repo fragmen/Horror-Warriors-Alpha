@@ -1,3 +1,58 @@
+<section id="hereoes_main_sec">
+    <section id="heroes_personatje">
+        <article id="heroes_personatje_nom">
+            <p id="heroes_personatje_nom_nikname">
+                <input placeholder="Nikname" type="text" ng-model="nom" size="100">
+            </p>
+        </article>
+        <article id="heroes_personatje_foto">
+            <div id="heroes_personatje_foto_avatar">
+                <img src="/dist/images/heroes/{{avatar}}" width="200px" height="150px" ng-init="avatar='cara_guerrero.png'">
+            </div>
+        </article>
+        <article id="heroes_personatje_info">
+            <p class="heroes_personatje_info_stats">{{heroi.dmg}} 1</p>
+            <p class="heroes_personatje_info_stats">{{heroi.hp}} 3</p>
+            <p class="heroes_personatje_info_stats">{{heroi.armor}} 10</p>
+        </article>
+        <article id="heroes_personatje_lvl">
+            <p id="heroes_personatje_lvl_punts">{{heroi.punts}} 50</p>
+            <p id="heroes_personatje_lvl_nivell">{{heroi.nivell}} 1</p>
+        </article>
+        <article id="heroes_personatje_atributs">
+            <p class="heroes_personatje_atrinuts_atri">
+                <input placeholder="Força:" type="text" ng-model="force">
+            </p>
+            <p class="heroes_personatje_atrinuts_atri">
+                <input placeholder="Agilitat:" type="text" ng-model="agility">
+            </p>
+            <p class="heroes_personatje_atrinuts_atri">
+                <input placeholder="Constitució:" type="text" ng-model="live">
+            </p>
+        </article>
+    </section>
+    <section id="heroes_list">
+        <section id="heroes_list_sec_1">
+            <article id="heroes_list_sec_1_0">    
+                <div id="heroes_list_sec_1_0_1" >
+                    <h2>Heroes list</h2>
+                </div>
+  
+                <div class="heroes_list_sec_1_0_" ng-repeat="resp in response['data']">
+                    <img class="heroes_list_sec_1_0_foto" src="/dist/images/heroes/{{avatar}}" ng-click="loadHeroe(resp._id)">
+                    <div class="heroes_list_sec_1_0_nikname">{{resp['nom']}}</div>
+                    <div id="heroes_list_sec_2_0">Join</div>
+                </div>
+                
+            </article>
+            
+        </section>
+        <section id="heroes_list_sec_2">
+            <div id="heroes_list_sec_2_0">New hero</div>
+        </section>
+    </section>
+</section>
+
 <section id="sec_editor">
         
         <section>
@@ -57,57 +112,4 @@
   
         </section>
 </section>
-
-<section id="hereoes_main_sec">
-    <section id="heroes_personatje">
-        <article id="heroes_personatje_nom">
-            <p id="heroes_personatje_nom_nikname">
-                <input placeholder="Nikname" type="text" ng-model="nom" size="100">
-            </p>
-        </article>
-        <article id="heroes_personatje_foto">
-            <div id="heroes_personatje_foto_avatar">
-                <img src="/dist/images/heroes/{{avatar}}" width="200px" height="150px" ng-init="avatar='cara_guerrero.png'">
-            </div>
-        </article>
-        <article id="heroes_personatje_info">
-            <p class="heroes_personatje_info_stats">{{heroi.dmg}}</p>
-            <p class="heroes_personatje_info_stats">{{heroi.hp}}</p>
-            <p class="heroes_personatje_info_stats">{{heroi.armor}}</p>
-        </article>
-        <article id="heroes_personatje_lvl">
-            <p id="heroes_personatje_lvl_punts">{{heroi.punts}}</p>
-            <p id="heroes_personatje_lvl_nivell">{{heroi.nivell}}</p>
-        </article>
-        <article id="heroes_personatje_atributs">
-            <p class="heroes_personatje_atrinuts_atri">
-                <input placeholder="Força:" type="text" ng-model="force">
-            </p>
-            <p class="heroes_personatje_atrinuts_atri">
-                <input placeholder="Agilitat:" type="text" ng-model="agility">
-            </p>
-            <p class="heroes_personatje_atrinuts_atri">
-                <input placeholder="Constitució:" type="text" ng-model="live">
-            </p>
-        </article>
-    </section>
-    <section id="heroes_list">
-        <section id="heroes_list_sec_1">
-            <article id="heroes_list_sec_1_0">    
-                <div id="heroes_list_sec_1_0_1" >
-                    <h2>Heroes list</h2>
-                </div>
-  
-                <div class="heroes_list_sec_1_0_" ng-repeat="resp in response['data']">
-                    <img class="heroes_list_sec_1_0_foto" src="/dist/images/heroes/{{avatar}}" ng-click="loadHeroe(resp._id)">
-                    <div class="heroes_list_sec_1_0_nikname">{{resp['nom']}}</div>
-                </div>
-                
-            </article>
-            
-        </section>
-        <section id="heroes_list_sec_2">
-            <div id="heroes_list_sec_2_0">New hero</div>
-        </section>
-    </section>
-</section>
+-->

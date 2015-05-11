@@ -1,12 +1,11 @@
 *{
-    border: 1px solid gold;
+    text-align: center;
 }
 #hereoes_main_sec input{
     outline:none;
     background: transparent;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.9);
-    box-shadow: 2px 2px 1px black;
 
     width: 75px;
     height: 35px;
@@ -28,8 +27,9 @@
     -ms-flex-direction: row;
     flex-direction: row;
     
-    background-color: rgba(0, 0, 0, 0.4);
-    
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: 6px 6px 3px black;
+     color: white;
     
 }
     #heroes_personatje{
@@ -108,11 +108,11 @@
                 
                 text-align: center;
                 background-color: rgba(0, 0, 0, 0.9);
-                box-shadow: 2px 2px 1px black;
 
                 width: 75px;
                 height: 35px;
                 color: whitesmoke;
+                border: 1px solid white;
             }
         #heroes_personatje_foto{
             display: -webkit-flex;
@@ -138,8 +138,24 @@
 
         }
             #heroes_personatje_foto_avatar{
-                width: 150px;
+                width: 200px;
                 height: 150px;
+                border: 1px solid white;
+                
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: flex;
+                
+                -webkit-justify-content: center;
+                -moz-flex-justify-content: center;
+                -ms-justify-content: center;
+                justify-content: center;
+                
+                -webkit-align-items: center;
+                -moz-ems: center;
+                -ms-align-items: center;
+                align-items: center;
             }
         #heroes_personatje_info{
             display: -webkit-flex;
@@ -166,7 +182,21 @@
             .heroes_personatje_info_stats{
                 width: 75px;
                 height: 35px;
-
+                border: 1px solid white;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: flex;
+                
+                -webkit-justify-content: center;
+                -moz-flex-justify-content: center;
+                -ms-justify-content: center;
+                justify-content: center;
+                
+                -webkit-align-items: center;
+                -moz-ems: center;
+                -ms-align-items: center;
+                align-items: center;
             }
         #heroes_personatje_lvl{
             display: -webkit-flex;
@@ -193,10 +223,41 @@
             #heroes_personatje_lvl_punts{
                 width: 75px;
                 height: 35px;
+                border: 1px solid white;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: flex;
+                
+                -webkit-justify-content: center;
+                -moz-flex-justify-content: center;
+                -ms-justify-content: center;
+                justify-content: center;
+                
+                -webkit-align-items: center;
+                -moz-ems: center;
+                -ms-align-items: center;
+                align-items: center;
             }
             #heroes_personatje_lvl_nivell{
                 width: 75px;
                 height: 35px;
+                border: 1px solid white;
+                
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: flex;
+                
+                -webkit-justify-content: center;
+                -moz-flex-justify-content: center;
+                -ms-justify-content: center;
+                justify-content: center;
+                
+                -webkit-align-items: center;
+                -moz-ems: center;
+                -ms-align-items: center;
+                align-items: center;
             }
         #heroes_personatje_atributs{
             display: -webkit-flex;
@@ -226,6 +287,23 @@
                 color:white;
                 font-size:1em;
                 font-weight: bold;
+                
+                border: 1px solid white;
+                
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: flex;
+                
+                -webkit-justify-content: center;
+                -moz-flex-justify-content: center;
+                -ms-justify-content: center;
+                justify-content: center;
+                
+                -webkit-align-items: center;
+                -moz-ems: center;
+                -ms-align-items: center;
+                align-items: center;
                 
             }
     #heroes_list{    
@@ -257,8 +335,7 @@
             width: 500px;
         }
             #heroes_list_sec_1_0{
-                background-color: rgba(0, 0, 0, 0.6);
-                box-shadow: 10px 10px 5px black;
+     
                 
                 text-align: center;
                 color: whitesmoke;
