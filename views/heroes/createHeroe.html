@@ -1,8 +1,11 @@
+
+
+<section id="sec_editor">
 <section id="hereoes_main_sec">
     <section id="heroes_personatje">
         <article id="heroes_personatje_nom">
             <p id="heroes_personatje_nom_nikname">
-                <input placeholder="Nikname" type="text" ng-model="nom" size="100">
+                <input placeholder="Nikname" nom de type="text" ng-model="nom" size="100">
             </p>
         </article>
         <article id="heroes_personatje_foto">
@@ -11,13 +14,13 @@
             </div>
         </article>
         <article id="heroes_personatje_info">
-            <p class="heroes_personatje_info_stats">{{heroi.dmg}} 1</p>
-            <p class="heroes_personatje_info_stats">{{heroi.hp}} 3</p>
-            <p class="heroes_personatje_info_stats">{{heroi.armor}} 10</p>
+            <p class="heroes_personatje_info_stats">{{heroi.dmg}}</p>
+            <p class="heroes_personatje_info_stats">{{heroi.hp}}</p>
+            <p class="heroes_personatje_info_stats">{{heroi.armor}}</p>
         </article>
         <article id="heroes_personatje_lvl">
-            <p id="heroes_personatje_lvl_punts">{{heroi.punts}} 50</p>
-            <p id="heroes_personatje_lvl_nivell">{{heroi.nivell}} 1</p>
+            <p id="heroes_personatje_lvl_punts">{{heroi.punts}}</p>
+            <p id="heroes_personatje_lvl_nivell">{{heroi.nivell}}</p>
         </article>
         <article id="heroes_personatje_atributs">
             <p class="heroes_personatje_atrinuts_atri">
@@ -40,8 +43,9 @@
   
                 <div class="heroes_list_sec_1_0_" ng-repeat="resp in response['data']">
                     <img class="heroes_list_sec_1_0_foto" src="/dist/images/heroes/{{avatar}}" ng-click="loadHeroe(resp._id)">
-                    <div class="heroes_list_sec_1_0_nikname">{{resp['nom']}}</div>
-                    <div id="heroes_list_sec_2_0">Join</div>
+                    <div class="heroes_list_sec_1_0_nikname">{{resp['nom']}} </div>
+                    <button id="heroes_list_sec_2_0" ng-click="dropHeroe(resp._id)">Delete</button>
+                    <button id="heroes_list_sec_2_0">Join</button>
                 </div>
                 
             </article>
@@ -49,67 +53,9 @@
         </section>
         <section id="heroes_list_sec_2">
             <div id="heroes_list_sec_2_0">New hero</div>
+            <div ng-click="save()" id="heroes_list_sec_2_0">Save Heroe</div>
+             
+            
         </section>
     </section>
 </section>
-
-<section id="sec_editor">
-        
-        <section>
-            <div id="Herou_title"><h1>Crea els teus Herois!</h1></div>
-            <table>
-            <tr>
-                <td>Avatar:</td>
-            </tr>
-             <tr>
-                <td><img src="/dist/images/heroes/{{avatar}}" width="200px" height="200px" ng-init="avatar='cara_guerrero.png'"></td>
-            </tr>
-                <td>
-                    <select ng-model="avatar">
-                        <option value="cara_guerrero.png">Gerrer</option>
-                        
-                    </select>
-                </td>
-            </tr>
-        </table>
-        
-        
-        <table>
-        	<tr>
-                <td align="rigth">Nom Heroi:</td><td><input type="text" ng-model="nom"></td>
-            
-            <tr>
-                <td>Vida:</td><td><input type="text" value=5 size="5" ng-model="live"></td>
-                
-            </tr>
-            <tr>
-                <td>Força:</td><td><input type="text" value=5 size="5" ng-model="force"></td>
-            </tr>
-            <tr>
-                <td>Agilitat:</td><td><input type="text" value=2 size="5" ng-model="agility"></td>
-            </tr>
-            <tr>
-                <td>Defensa:</td><td><input type="text" value=5 size="5" ng-model="defense"></td>
-            </tr>
-      
-            
-                <td><input type="button" ng-click="save()" value="Guardar"></td>
-            </tr>                     
-            
-            </table>
-        
-        
-        
-            
-            <table border=1 class="banqueta">
-                
-            <caption>ELS TESU HEROIS</caption>
-            
-            <tr ng-repeat="resp in response['data']">
-                <td>{{resp['nom']}} </td><td>eliminar</td>
-            </tr>
-            </table>
-  
-        </section>
-</section>
--->

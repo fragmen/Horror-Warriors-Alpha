@@ -213,9 +213,9 @@ class HorrorWarriors:
             live = str(dades_in["live"])
             force = str(dades_in["force"])
             agility = str(dades_in["agility"])
-            defense = str(dades_in["defense"])
+            
 
-            uid = self.heroes.save({"id_jugador":id_jugador,"nom":nom,"avatar":avatar,"live":live,"force":force,"agility":agility,"defense":defense})
+            uid = self.heroes.save({"id_jugador":id_jugador,"nom":nom,"avatar":avatar,"live":live,"force":force,"agility":agility})
             self.resposta["status"] = """OK"""
             self.resposta["msg"] = """Les dades s'han guardat correctament"""
             return(json.dumps(self.resposta))
@@ -297,7 +297,27 @@ class HorrorWarriors:
             self.resposta["status"] = "Error"
             self.resposta["msg"] = """No tens encara cap Heroi disponible!"""
             return(json.dumps(self.resposta))
+
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    @cherrypy.tools.json_in()
     
+    def dropHeroe(self):
+        self.resposta = {}
+        try:
+            dades_in = cherrypy.request.json
+            id_heroe = str(dades_in["id_heroe"])
+            self.heroes.remove({"_id":ObjectId(id_heroe)})
+            self.resposta["status"] = "OK"
+            self.resposta["msg"] = "Els heroi s'ha borrat correctament"
+            return(json.dumps(self.resposta))
+            
+            
+        except:
+            self.resposta["status"] = "Error"
+            self.resposta["msg"] = "No s'ha trobat el jugador a la BD de Mongo"
+            return(json.dumps(self.resposta))
+        
     @cherrypy.expose
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()

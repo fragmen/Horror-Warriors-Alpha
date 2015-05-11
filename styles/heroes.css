@@ -412,11 +412,11 @@
                 -ms-align-items: center;
                 align-items: center;
             
-                color: whitesmoke;
-                background-color: black;
+                color: black;
+                background-color: whitesmoke;
                 border: none;
                 height: 35px;
-                width: 100px;
+                width: 75px;
                 font-size: 18px;
                 border-radius: 5px;
             }
