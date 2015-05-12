@@ -1,11 +1,11 @@
 
-
-<section id="sec_editor">
+        
+<div id="Heroes_title"><h1>Crea els teus Herois!</h1></div>
 <section id="hereoes_main_sec">
     <section id="heroes_personatje">
         <article id="heroes_personatje_nom">
             <p id="heroes_personatje_nom_nikname">
-                <input placeholder="Nikname" nom de type="text" ng-model="nom" size="100">
+                <input placeholder="Nikname" type="text" ng-model="nom" size="100">
             </p>
         </article>
         <article id="heroes_personatje_foto">
@@ -24,13 +24,13 @@
         </article>
         <article id="heroes_personatje_atributs">
             <p class="heroes_personatje_atrinuts_atri">
-                <input placeholder="Força:" type="text" ng-model="force">
+                <input placeholder="Força" type="text" ng-model="force">
             </p>
             <p class="heroes_personatje_atrinuts_atri">
-                <input placeholder="Agilitat:" type="text" ng-model="agility">
+                <input placeholder="Agilitat" type="text" ng-model="agility">
             </p>
             <p class="heroes_personatje_atrinuts_atri">
-                <input placeholder="Constitució:" type="text" ng-model="live">
+                <input  placeholder="Constitucio" type="text" ng-model="live">
             </p>
         </article>
     </section>
@@ -43,9 +43,10 @@
   
                 <div class="heroes_list_sec_1_0_" ng-repeat="resp in response['data']">
                     <img class="heroes_list_sec_1_0_foto" src="/dist/images/heroes/{{avatar}}" ng-click="loadHeroe(resp._id)">
-                    <div class="heroes_list_sec_1_0_nikname">{{resp['nom']}} </div>
-                    <button id="heroes_list_sec_2_0" ng-click="dropHeroe(resp._id)">Delete</button>
-                    <button id="heroes_list_sec_2_0">Join</button>
+                    <div class="heroes_list_sec_1_0_nikname">{{resp['nom']}}</div>
+                    
+                    <div class="heroes_list_sec_1_0_buttons" ng-click="dropHeroe(resp._id)">Esborrar</div>
+                    <div class="heroes_list_sec_1_0_buttons" ng-click="dropHeroe(resp._id)">Join</div>
                 </div>
                 
             </article>

@@ -74,7 +74,7 @@ class HorrorWarriors:
                 # transformem el _id en string per que sigui JSON-serializable (si no, dona error)
                 jugador["_id"] = str(uid)
                 # retornem dades d'usuari
-                self.resposta["status"]="Ok"
+                self.resposta["status"]="OK"
                 self.resposta["msg"]="S'ha creat el jugador exitosament"
                 self.resposta["uid"] = str(jugador["_id"])
                 return json.dumps(self.resposta)
@@ -213,6 +213,7 @@ class HorrorWarriors:
             live = str(dades_in["live"])
             force = str(dades_in["force"])
             agility = str(dades_in["agility"])
+ 
             
 
             uid = self.heroes.save({"id_jugador":id_jugador,"nom":nom,"avatar":avatar,"live":live,"force":force,"agility":agility})
