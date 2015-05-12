@@ -1,4 +1,22 @@
 /*Section Players*/
+#main{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    
+    -webkit-flex-flow: row wrap;
+    -moz-flex-flow: row wrap;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    
+    -webkit-justify-content:  space-around;
+    -moz-justify-content:  space-around;
+    -ms-justify-content:  space-around;
+    justify-content:  space-around;
+    
+    width: 80%;
+}
 #players{
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -28,7 +46,7 @@
 #top{  
     background: url("../images/main/papiro_top.png") no-repeat;
     background-size: 100% 100%;
-    width: 800px;
+    width: 600px;
     height: 158px;
 }
 #players_list{
@@ -52,7 +70,7 @@
     -ms-flex-flow: row wrap;
     flex-flow: row wrap;
 
-    width: 800px;
+    width: 600px;
     height: 500px;
     color: white; 
     
@@ -64,7 +82,7 @@
 #bottom{
     background: url("../images/main/papiro_bottom.png") no-repeat; 
     background-size: 100% 100%; 
-    width: 800px; 
+    width: 600px; 
     height:158px; 
     margin-top: -2px;}
 .player{
@@ -75,7 +93,7 @@
     
     border-top: 31.25px;
     border-bottom: 31.25px;
-    width: 660px;
+    width: 525px;
     height: 125px;
 }
 /*div info*/
@@ -96,8 +114,8 @@
     justify-content:  space-around;
     
     
-    height: 125px;
-    width: 155px;
+    height: 100px;
+    width: 120px;
 }
 .name{
     width: 150px;
@@ -203,11 +221,11 @@
     -ms-align-align-items: center;
     align-items: center;
     
-    
+    width: 375px;
 }
 #calendar{
-    height: 450px;
-    width: 450px;
+    height: 350px;
+    width: 350px;
     
     background-color: rgba(0, 0, 0, 0.6);
     box-shadow: 10px 10px 5px black;

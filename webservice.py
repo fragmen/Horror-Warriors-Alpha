@@ -213,6 +213,7 @@ class HorrorWarriors:
             live = str(dades_in["live"])
             force = str(dades_in["force"])
             agility = str(dades_in["agility"])
+ 
             
 
             uid = self.heroes.save({"id_jugador":id_jugador,"nom":nom,"avatar":avatar,"live":live,"force":force,"agility":agility})
