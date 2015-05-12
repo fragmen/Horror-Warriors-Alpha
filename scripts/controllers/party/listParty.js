@@ -9,6 +9,7 @@
  */
 angular.module('horrorWarriorParty')
   .controller('listPartyCtrl', function ($scope, $http, $location) {
+      
   		$scope.id_jugador = readCookie("id");
     	$scope.refreix = function (){
     		$http.get("../api/listParty")
@@ -22,11 +23,12 @@ angular.module('horrorWarriorParty')
     	}
     	setInterval($scope.refreix, 1000);
         $scope.joinParty = function(nom,pass){
+            $scope.id_heroi = readCookie("id_heroi");
             $scope.pass = prompt("Password:");
             if($scope.pass == pass){
                    
                 $scope.id = readCookie("id");
-                $http.post("../api/joinParty",{nom:nom, id_jugador:$scope.id})
+                $http.post("../api/joinParty",{nom:nom, id_jugador:$scope.id, id_heroi:$scope.id_heroi})
                     .success(function (data){
                         $scope.response = (JSON.parse(data));
                         alert($scope.response["msg"]);

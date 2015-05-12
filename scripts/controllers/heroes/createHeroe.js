@@ -8,7 +8,7 @@
  * Controller of the horrorWarriorApp
  */
 angular.module('horrorWarriorApp')
-  .controller('createHeroeCtrl', function ($scope,$http) {
+  .controller('createHeroeCtrl', function ($scope,$http,$location) {
     $scope.dropHeroe = function(id_heroe){
        $http.post("../api/dropHeroe",{id_heroe:id_heroe})
             .success( function(data){
@@ -59,6 +59,10 @@ angular.module('horrorWarriorApp')
             $scope.response = JSON.parse(data);
             alert($scope.response["msg"]);
     });
+    }
+    $scope.joinParty = function(id_heroi){
+        createCookie("id_heroi",id_heroi,1);
+        window.location = "PartyLayout.html#/listParty";
     }
     
   });

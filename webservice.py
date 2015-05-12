@@ -74,7 +74,7 @@ class HorrorWarriors:
                 # transformem el _id en string per que sigui JSON-serializable (si no, dona error)
                 jugador["_id"] = str(uid)
                 # retornem dades d'usuari
-                self.resposta["status"]="Ok"
+                self.resposta["status"]="OK"
                 self.resposta["msg"]="S'ha creat el jugador exitosament"
                 self.resposta["uid"] = str(jugador["_id"])
                 return json.dumps(self.resposta)
@@ -437,8 +437,10 @@ class HorrorWarriors:
             dades_in = cherrypy.request.json
             nom_p = str(dades_in["nom"])
             id_jugador = str(dades_in["id_jugador"])
+            id_heroi = str(dades_in["id_heroi"])
             partida = self.partida.find_one({"nom":nom_p},{"_id":False})
             jugadors_array = []
+            herois_array = []
 
             
             if(int(partida["cua"]<int(partida["maxper"]))):
@@ -455,7 +457,19 @@ class HorrorWarriors:
                         else:
                             
                             part["id"]= str(part["id"])
-                            jugadors_array.append(part)            
+                            jugadors_array.append(part)
+                    for part in partida["herois"]:
+                        if(str(part)==id_heroi):
+                            self.resposta["status"]= "Error"
+                            self.resposta["msg"] = "El heroi ja esta inscrit amb anterioritat"
+                            self.resposta["data"] = partida
+                            
+                            return(json.dumps(self.resposta))
+                            
+                        else:
+                            
+                            part["id"]= str(part["id"])
+                            herois_array.append(part)       
                 except:
                     
                     partida["nom"] = str(partida["nom"])
@@ -469,13 +483,15 @@ class HorrorWarriors:
                     cua = int(partida["cua"]+1)
                     partida["master"] = nomMaster
                                         
-                    jugadors_array.append(str(id_jugador))  
+                    jugadors_array.append(str(id_jugador))
+                    herois_array.append(str(id_heroi))
                     partida["jugadors"] = jugadors_array
+                    partida["herois"] = herois_array
 
                     
                     self.partida.update({"nom":nom_p},{'$set':{"cua":int(cua)}})
                     
-                    self.partida.update({"nom":nom_p},{'$set':{"jugadors":jugadors_array}})
+                    self.partida.update({"nom":nom_p},{'$set':{"jugadors":jugadors_array,"herois":herois_array}})
                    
                     
                     self.resposta["status"] = "OK"
