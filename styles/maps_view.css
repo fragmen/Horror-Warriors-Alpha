@@ -1,3 +1,115 @@
-#maps_section{
-    
+#map_main_section{
+	display: flex;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+        
+        -webkit-justify-content: space-around;
+        -moz-justify-content: space-around;
+        -ms-justify-content: space-around;
+        justify-content: space-around;
+        
+        -webkit-flex-direction: row;
+	-moz-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+        
+        -webkit-flex-wrap: wrap;
+        -moz-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+
+
+        
+        width: 1000px;
+        height: 850px;
 }
+    #map_title{
+	display: flex;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+        
+        -webkit-justify-content: space-around;
+        -moz-justify-content: space-around;
+        -ms-justify-content: space-around;
+        justify-content: space-around;
+        
+        width: 1000px;
+        height: 35px;
+         
+    }
+        #map_title_text{
+            
+             
+
+        }
+    #map_form {
+        display: flex;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+        
+        -webkit-justify-content: space-around;
+        -moz-justify-content: space-around;
+        -ms-justify-content: space-around;
+        justify-content: space-around;
+        
+        
+        
+        width: 850px;
+        height: 225px;
+    }
+        #map_form_inputs{
+            display: flex;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+
+            -webkit-justify-content: space-around;
+            -moz-justify-content: space-around;
+            -ms-justify-content: space-around;
+            justify-content: space-around;
+            
+            -webkit-flex-wrap: wrap;
+            -moz-flex-wrap: wrap;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+
+             width: 375px;
+             height: 225px;
+        }
+            #map_form_inputs_buttons{
+                display: flex;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: -ms-flex;
+
+                -webkit-justify-content: space-around;
+                -moz-justify-content: space-around;
+                -ms-justify-content: space-around;
+                justify-content: space-around;
+                
+                -webkit-align-items: center;
+                -moz-align-items: center;
+                -ms-align-items: center;
+                align-items: center;
+                
+  
+
+                width: 325px;
+                height: 50px;
+            }
+        #map_form_prev{
+             width: 375px;
+             height: 225px;
+        }
+    #map_taulell{
+        width: 500px;
+        height: 500px;
+    }
+    table{
+        background-color: rgba(0, 0, 0, 0.6);
+        color: whitesmoke;
+        height: 125px;
+    }
