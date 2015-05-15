@@ -1,7 +1,7 @@
 <section id="party_list_section">
     <table id="party_parties_list">
         <tr align="center">
-            <td>Nom</td><td>Jugadors</td><td>Idioma</td><td>Master</td>
+            <td>Nom</td><td>Jugadors</td><td>Online</td><td>Master</td>
         </tr> 
         <tr ng-repeat="resp in response['data'] | filter:filtre">
             <td> {{resp.nom}}</td><td>{{resp.cua}}/{{resp.maxper}}</td><td>{{resp.online}}</td><td>{{resp.master}}</td><td><button ng-click="joinParty(resp.nom,resp.pass)" id="join">JOIN</button></td>	
