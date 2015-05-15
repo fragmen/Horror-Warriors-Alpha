@@ -298,19 +298,45 @@ class HorrorWarriors:
             self.resposta["status"] = "Error"
             self.resposta["msg"] = """No tens encara cap Heroi disponible!"""
             return(json.dumps(self.resposta))
+        
+    def relacionsHerois(self, id_heroe):
+            self.resposta = {}
+            heroi_array = []
+            try:
+                partida = self.partida.find({},{"herois":1})
+                for party in partida:
+                    tmp = party
+                    for p in party["herois"]:
+                        
+                        if(str(p) != str(id_heroe)):
+                            heroi_array.append(str(p))
+                            id = str(tmp["_id"]);
+                            print"""merdddddaaaaaaaaaa""",id
 
+                    self.partida.update({"_id":ObjectId(id)},{'$set':{"herois":heroi_array}})
+
+                return(True)
+                 
+            except:
+                
+                return(False)
+            
     @cherrypy.expose
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
-    
     def dropHeroe(self):
         self.resposta = {}
         try:
             dades_in = cherrypy.request.json
             id_heroe = str(dades_in["id_heroe"])
+            if(self.relacionsHerois(id_heroe)==True):
+                self.resposta["msg"] = "Els heroi s'ha borrat correctament incloint les relacions"
+            else:
+                self.resposta["msg"] = "Els heroi s'ha borrat correctament"
+                
             self.heroes.remove({"_id":ObjectId(id_heroe)})
             self.resposta["status"] = "OK"
-            self.resposta["msg"] = "Els heroi s'ha borrat correctament"
+            
             return(json.dumps(self.resposta))
             
             
@@ -318,7 +344,10 @@ class HorrorWarriors:
             self.resposta["status"] = "Error"
             self.resposta["msg"] = "No s'ha trobat el jugador a la BD de Mongo"
             return(json.dumps(self.resposta))
-        
+    
+    
+    
+    
     @cherrypy.expose
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
@@ -445,60 +474,59 @@ class HorrorWarriors:
 
             
             if(int(partida["cua"]<int(partida["maxper"]))):
-                try:
+                
                     
-                    for part in partida["jugadors"]:
-                        if(str(part)==id_jugador):
-                            self.resposta["status"]= "Error3"
-                            self.resposta["msg"] = "El jugador ja esta inscrit amb anterioritat"
-                            self.resposta["data"] = partida
+                for part in partida["jugadors"]:
+                    if(str(part)==id_jugador):
+                        self.resposta["status"]= "Error3"
+                        self.resposta["msg"] = "El jugador ja esta inscrit amb anterioritat"
+                        self.resposta["data"] = partida
                             
-                            return(json.dumps(self.resposta))
+                        return(json.dumps(self.resposta))
                             
-                        else:
+                    else:
+                        jugadors_array.append(str(part))
                             
-                            part["id"]= str(part["id"])
-                            jugadors_array.append(part)
-                    for part in partida["herois"]:
-                        if(str(part)==id_heroi):
-                            self.resposta["status"]= "Error"
-                            self.resposta["msg"] = "El heroi ja esta inscrit amb anterioritat"
-                            self.resposta["data"] = partida
+                for parth in partida["herois"]:
+                    if(str(parth)==id_heroi):
+                        self.resposta["status"]= "Error"
+                        self.resposta["msg"] = "El heroi ja esta inscrit amb anterioritat"
+                        self.resposta["data"] = partida
                             
-                            return(json.dumps(self.resposta))
+                        return(json.dumps(self.resposta))
                             
-                        else:
+                    else:
                             
-                            part["id"]= str(part["id"])
-                            herois_array.append(part)       
-                except:
+                            
+                        herois_array.append(str(parth))       
+                
                     
-                    partida["nom"] = str(partida["nom"])
-                    partida["online"] = str(partida["online"])
-                    partida["maxper"] = str(partida["maxper"])
-                    partida["pass"] = str(partida["pass"])
-                    idMaster = str(partida["id_master"])
-                    nomMaster = self.jugadors.find_one({"_id":ObjectId(idMaster)})
-                    nomMaster = str(nomMaster["nick"])
+                partida["nom"] = str(partida["nom"])
+                partida["online"] = str(partida["online"])
+                partida["maxper"] = str(partida["maxper"])
+                partida["pass"] = str(partida["pass"])
+                idMaster = str(partida["id_master"])
+                nomMaster = self.jugadors.find_one({"_id":ObjectId(idMaster)})
+                nomMaster = str(nomMaster["nick"])
                     
-                    cua = int(partida["cua"]+1)
-                    partida["master"] = nomMaster
+                cua = int(partida["cua"]+1)
+                partida["master"] = nomMaster
                                         
-                    jugadors_array.append(str(id_jugador))
-                    herois_array.append(str(id_heroi))
-                    partida["jugadors"] = jugadors_array
-                    partida["herois"] = herois_array
+                jugadors_array.append(str(id_jugador))
+                herois_array.append(str(id_heroi))
+                partida["jugadors"] = jugadors_array
+                partida["herois"] = herois_array
 
                     
-                    self.partida.update({"nom":nom_p},{'$set':{"cua":int(cua)}})
+                self.partida.update({"nom":nom_p},{'$set':{"cua":int(cua)}})
                     
-                    self.partida.update({"nom":nom_p},{'$set':{"jugadors":jugadors_array,"herois":herois_array}})
+                self.partida.update({"nom":nom_p},{'$set':{"jugadors":jugadors_array,"herois":herois_array}})
                    
                     
-                    self.resposta["status"] = "OK"
-                    self.resposta["msg"] = "Unit a la partida correctament"
-                    self.resposta["data"] = partida
-                    return(json.dumps(self.resposta))
+                self.resposta["status"] = "OK"
+                self.resposta["msg"] = "Unit a la partida correctament"
+                self.resposta["data"] = partida
+                return(json.dumps(self.resposta))
             else:
                 self.resposta["status"] = "Error"
                 self.resposta["msg"] = "No queda lloc per la partida"
