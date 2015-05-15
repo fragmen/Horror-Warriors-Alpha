@@ -1,6 +1,5 @@
 <section id="party_list_section">
     <table id="party_parties_list">
-        <caption>Llista de Partides</caption>
         <tr align="center">
             <td>Nom</td><td>Jugadors</td><td>Idioma</td><td>Master</td>
         </tr> 
@@ -10,24 +9,11 @@
     </table>
     <article id="party_artic_filter">
         <div class="party_div_article_filter">
-            <table id="party_filters_list">
-                <tr>
-                    <td>Nom</td>
-                    <td><input type="text" size="8" ng-model="filtre"></td>
-                </tr>
-                <tr>
-                    <td>Not full</td>
-                    <td><input type="checkbox"></td>
-                </tr>
-                <tr>
-                    <td>Not empty</td>
-                    <td><input type="checkbox"></td>
-                </tr>
-                <tr>
-                    <td>Not password</td>
-                    <td><input type="checkbox"></td>
-                </tr>
-            </table>
+            <div id="party_article_filter_title"><h2>Filter</h2></div>
+            <div id="party_artic_filter_input">
+            Nom
+            <input type="text" size="10" ng-model="filtre">
+            </div>
         </div>
         <div class="party_div_article_filter">
             <button id="join">JOIN</button>
