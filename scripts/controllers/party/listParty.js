@@ -8,7 +8,7 @@
  * Controller of the horrorWarriorApp
  */
 angular.module('horrorWarriorParty')
-  .controller('listPartyCtrl', function ($scope, $http, $location) {
+  .controller('listPartyCtrl', function ($scope, $http, $location,$rootScope) {
       
   		$scope.id_jugador = readCookie("id");
     	$scope.refreix = function (){
@@ -23,6 +23,7 @@ angular.module('horrorWarriorParty')
     	}
     	setInterval($scope.refreix, 1000);
         $scope.joinParty = function(nom,pass){
+            $rootScope.nomParty = nom;
             $scope.id_heroi = readCookie("id_heroi");
             $scope.pass = prompt("Password:");
             if($scope.pass == pass){
@@ -32,7 +33,7 @@ angular.module('horrorWarriorParty')
                     .success(function (data){
                         $scope.response = (JSON.parse(data));
                         alert($scope.response["msg"]);
-                        if($scope.response["status"]=="Error3"){
+                        if($scope.response["status"]=="Error1"){
                             return 0;
                         }else{
                         $location.path("viewParty");

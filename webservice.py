@@ -1,4 +1,5 @@
 __author__ = 'joaquin'
+# -*- coding: utf-8 -*-
 
 import cherrypy
 import json
@@ -31,6 +32,10 @@ class HorrorWarriors:
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
     def login(self,*args,**kwargs):
+        """
+        Funcio que serveix per logarnos i en cas de que no existeixi el usuari, el crea.
+        Accepta els parametres de nick password, que desara encriptat i el bolea de si es master o no
+        """
 
         try:
 
@@ -88,6 +93,10 @@ class HorrorWarriors:
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
     def esMaster(self,*args,**kwargs):
+        """
+        comprva si la id del jugador que enviem es de un Master o no, ens serveix en la plana principal
+        homeLayout per filtar les opcions depenent aquest origen
+        """
         self.resposta = {}
         try:
             dades_in = cherrypy.request.json
@@ -105,6 +114,9 @@ class HorrorWarriors:
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
     def createMap(self,*args,**kwargs):
+        """
+        Desa les dades del mapa i la id del master com a relacio
+        """
         self.resposta = {}
         try:
 
@@ -129,6 +141,9 @@ class HorrorWarriors:
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
     def createBeast(self, *args, **keywargs):
+        """
+        Desa les dades de la criatura i els seus atributs amb la id de relació amb el master
+        """
         self.resposta = {}
         try:
             dades_in = cherrypy.request.json
@@ -154,6 +169,9 @@ class HorrorWarriors:
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
     def loadBeast(self,*args, **keywargs):
+        """
+        carrega tot els atributs de la bestia la qual pasem la Id
+        """
         self.resposta = {}
         try:
             dades_in = cherrypy.request.json
@@ -178,6 +196,9 @@ class HorrorWarriors:
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
     def listBeast(self):
+        """
+        Carrega les dades de totes les besties del Master que li pasem la id
+        """
         self.resposta = {}
         try:
             dades_in = cherrypy.request.json
@@ -204,6 +225,9 @@ class HorrorWarriors:
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
     def createHeroe(self, *args, **keywargs):
+        """
+        Desa les dades del Heroi que hem introduit al formulari i el relaciona amb la id del Master
+        """
         self.resposta = {}
         try:
             dades_in = cherrypy.request.json
@@ -230,6 +254,9 @@ class HorrorWarriors:
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
     def loadHeroes(self,*args, **keywargs):
+        """
+        Llista tots els herois del Jugador
+        """
         self.resposta = {}
         try:
             dades_in = cherrypy.request.json
@@ -255,6 +282,9 @@ class HorrorWarriors:
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
     def loadHeroe(self):
+        """
+        Llista els atributs del Heroi en questio
+        """
         self.resposta = {}
         try:
             dades_in = cherrypy.request.json
@@ -278,6 +308,9 @@ class HorrorWarriors:
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
     def listHeroes(self):
+        """
+        Llista tots els herois del Jugador
+        """
         self.resposta = {}
         try:
             dades_in = cherrypy.request.json
@@ -300,26 +333,29 @@ class HorrorWarriors:
             return(json.dumps(self.resposta))
         
     def relacionsHerois(self, id_heroe):
-            self.resposta = {}
-            heroi_array = []
-            try:
-                partida = self.partida.find({},{"herois":1})
-                for party in partida:
-                    tmp = party
-                    for p in party["herois"]:
+        """
+        Busca si exiteixen relaion de partides on aquest heroi estiges subscrit, si es el cas, les elimina
+        """
+        self.resposta = {}
+        heroi_array = []
+        try:
+            partida = self.partida.find({},{"herois":1})
+            for party in partida:
+                tmp = party
+                for p in party["herois"]:
                         
-                        if(str(p) != str(id_heroe)):
-                            heroi_array.append(str(p))
-                            id = str(tmp["_id"]);
-                            print"""merdddddaaaaaaaaaa""",id
+                    if(str(p) != str(id_heroe)):
+                        heroi_array.append(str(p))
+                        id = str(tmp["_id"]);
+                            
+                    
+                self.partida.update({"_id":ObjectId(id)},{'$set':{"herois":heroi_array}})
 
-                    self.partida.update({"_id":ObjectId(id)},{'$set':{"herois":heroi_array}})
-
-                return(True)
+            return(True)
                  
-            except:
+        except:
                 
-                return(False)
+            return(False)
             
     @cherrypy.expose
     @cherrypy.tools.json_out()
@@ -364,7 +400,7 @@ class HorrorWarriors:
             print(id,nom,pas,maxper,idioma)
             
             master = self.jugadors.find_one({"_id":ObjectId(id_jugador)})
-            self.partida.save({"id_master":id_jugador,"nom":nom, "id_jugadors":0, "pass":pas, "maxper":maxper,"cua":0, "idioma":idioma, "online":False})
+            self.partida.save({"id_master":id_jugador,"nom":nom, "pass":pas, "maxper":maxper,"cua":0, "idioma":idioma, "online":False})
             self.resposta["status"] = "OK"
             self.resposta["msg"] = """S'han guardat les dades d el apartida correctament"""
             return(json.dumps(self.resposta))
@@ -464,6 +500,7 @@ class HorrorWarriors:
         
         self.resposta = {}
         try:
+          
             dades_in = cherrypy.request.json
             nom_p = str(dades_in["nom"])
             id_jugador = str(dades_in["id_jugador"])
@@ -471,36 +508,32 @@ class HorrorWarriors:
             partida = self.partida.find_one({"nom":nom_p},{"_id":False})
             jugadors_array = []
             herois_array = []
-
+            print("""DADES BEN PASADES""")
             
             if(int(partida["cua"]<int(partida["maxper"]))):
+                if(partida.get("jugadors")):
+                    for part in partida["jugadors"]:
+                        if(str(part)==id_jugador):
+                            self.resposta["status"]= "Error"
+                            self.resposta["msg"] = "El jugador ja esta inscrit amb anterioritat"
+                            self.resposta["data"] = partida
+                            return(json.dumps(self.resposta))
+                        
+                        else:
+                            jugadors_array.append(str(part))
+                if(partida.get("herois")):            
+                    for parth in partida["herois"]:
+                        if(str(parth)==id_heroi):
+                            self.resposta["status"]= "Error2"
+                            self.resposta["msg"] = "El heroi ja esta inscrit amb anterioritat"
+                            self.resposta["data"] = partida
+                            return(json.dumps(self.resposta))
+
+                        else:
+                            herois_array.append(str(parth))
                 
-                    
-                for part in partida["jugadors"]:
-                    if(str(part)==id_jugador):
-                        self.resposta["status"]= "Error3"
-                        self.resposta["msg"] = "El jugador ja esta inscrit amb anterioritat"
-                        self.resposta["data"] = partida
-                            
-                        return(json.dumps(self.resposta))
-                            
-                    else:
-                        jugadors_array.append(str(part))
-                            
-                for parth in partida["herois"]:
-                    if(str(parth)==id_heroi):
-                        self.resposta["status"]= "Error"
-                        self.resposta["msg"] = "El heroi ja esta inscrit amb anterioritat"
-                        self.resposta["data"] = partida
-                            
-                        return(json.dumps(self.resposta))
-                            
-                    else:
-                            
-                            
-                        herois_array.append(str(parth))       
+                print("""CHICA FORA!!""")
                 
-                    
                 partida["nom"] = str(partida["nom"])
                 partida["online"] = str(partida["online"])
                 partida["maxper"] = str(partida["maxper"])
@@ -509,9 +542,10 @@ class HorrorWarriors:
                 nomMaster = self.jugadors.find_one({"_id":ObjectId(idMaster)})
                 nomMaster = str(nomMaster["nick"])
                     
-                cua = int(partida["cua"]+1)
-                partida["master"] = nomMaster
-                                        
+                cua = int(partida["cua"])+1
+                partida["id_master"] = nomMaster
+                       
+                
                 jugadors_array.append(str(id_jugador))
                 herois_array.append(str(id_heroi))
                 partida["jugadors"] = jugadors_array
@@ -531,10 +565,64 @@ class HorrorWarriors:
                 self.resposta["status"] = "Error"
                 self.resposta["msg"] = "No queda lloc per la partida"
                 return(json.dumps(self.resposta))
-        except:
+        except Exception as e:
             self.resposta["status"] = "Error"
             self.resposta["msg"] = "Error a la funcio del webservice de joinParty"
+            print "ERROR desconegut: "+str(e.__class__.__name__)
             return(json.dumps(self.resposta))
+    
+    
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    @cherrypy.tools.json_in()
+    def viewParty(self):
+        self.resposta = {}
+        if(1==1):
+    
+            dades_in = cherrypy.request.json
+            nomParty = str(dades_in["nomParty"])
+            partida = self.partida.find_one({"nom":nomParty})
+            partida["_id"] = str(partida["_id"])
+            jugadors_array_Oj = []
+            herois_array_Oj = []
+            
+            jugadors_array = partida["jugadors"]
+            herois_array = partida["herois"]
+            
+            for jugador in jugadors_array:
+                jugador = ObjectId(jugador)
+                print jugador
+                jugadors_array_Oj.append(jugador)
+            
+            for herois in herois_array:
+                herois = ObjectId(herois)
+                print herois
+                herois_array_Oj.append(herois)
+                
+            print jugadors_array_Oj
+            print herois_array_Oj
+            
+            self.resposta["msg"] = "S'han trobat les seguents dades"
+            self.resposta["status"] = "OK"
+            jugadors = self.jugadors.find({"_id":{"$in":jugadors_array_Oj}})
+            herois = self.heroes.find({"_id":{"$in":herois_array_Oj}})
+            herois_array = []
+            jugadors_array = []
+            for hero in herois:
+                hero["_id"] = str(hero["_id"])
+                herois_array.append(hero)
+            for juga in jugadors:
+                juga["_id"] = str(juga["_id"])
+                jugadors_array.append(juga)
+            self.resposta["herois"]=herois_array
+            self.resposta["jugadors"] = jugadors_array
+            return(json.dumps(self.resposta))
+            
+        else:
+            
+            print "ERROR desconegut: "
+            return "ERROR desconegut: "+str(e.__class__.__name__)
+        
 
         
 application = cherrypy.Application(HorrorWarriors(), script_name=None, config=None)
