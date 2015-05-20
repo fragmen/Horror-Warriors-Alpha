@@ -24,6 +24,8 @@
 #party_parties_list{
     color: white; 
     text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 10px 10px 5px black;
 }
 #party_parties_list td{
     width: 150px;
@@ -63,13 +65,65 @@
     -webkit-flex-wrap: wrap;
     -moz-flex-flex-wrap: wrap;
     justify-flex-wrap: wrap;
+    flex-wrap: wrap;
     
     -webkit-flex-direction: column;
     -moz-flex-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
     
+    -webkit-justify-content: space-around;
+    -moz-justify-content: space-around;
+    -ms-justify-content: space-around;
+    justify-content: space-around;
+    
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
     margin-left: 50px;
+    
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 10px 10px 5px black;
+}
+#party_article_filter_title{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    
+    -webkit-justify-content: space-around;
+    -moz-justify-content: space-around;
+    -ms-justify-content: space-around;
+    justify-content: space-around;
+    
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    
+    width: 250px;
+    height: 50px;
+}
+#party_artic_filter_input{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    
+    -webkit-justify-content: space-around;
+    -moz-justify-content: space-around;
+    -ms-justify-content: space-around;
+    justify-content: space-around;
+    
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    
+    width: 100%;
+    height: 100px;
+    
 }
 #party_filters_list{
     width: 300px;
@@ -77,28 +131,8 @@
     color: white; 
 }
 
-.party_div_article_filter{
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: flex;
-
-    -webkit-justify-content: center;
-    -moz-flex-justify-content: center;
-    -ms-justify-content: center;
-    justify-content: center;
-    
-    -webkit-align-items: center;
-    -moz-align-items: center;
-    -ms-align-align-items: center;
-    align-items: center;
-
-    height: 250px;
-    width: 300px;
-}
 table{
-    background-color: rgba(0, 0, 0, 0.6);
-    box-shadow: 10px 10px 5px black;
+    
 }
 button{
     border-radius: 5px;
