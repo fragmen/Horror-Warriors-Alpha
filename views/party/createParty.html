@@ -34,6 +34,7 @@
 		</tr>
 		<tr ng-repeat="partida in partides['data']">
 			<td>{{partida.nom}}</td> <td>{{partida.maxper}}</td><td ng-click="online(partida.nom,partida.online)" ng-style="styleOnline">{{partida.online}}</td>
+                        <td><button ng-click="joinParty(partida.nom)" id="join">JOIN</button></td>
 		</tr>
 		
 	</table>

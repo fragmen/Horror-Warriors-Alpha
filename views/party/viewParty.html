@@ -1,6 +1,6 @@
 <section id="main">
     <article id="container_players">
-        <div id="top"></div>
+        <div id="top">
         <div id="players_list">
             <div class="player"  ng-repeat="resp in response['herois']">
             <div class="info">
@@ -34,7 +34,8 @@
     <article id="calendar_ready">
         <div id="calendar"></div>
         <div id="buton_listo">
-            <button id="ready_button">Ready</button>
+            <button id="ready_button" ng-show="esMaster">Ready</button>
+            
         </div>
     </article>
 </section>

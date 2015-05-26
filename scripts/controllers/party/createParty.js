@@ -8,7 +8,7 @@
  * Controller of the horrorWarriorApp
  */
 angular.module('horrorWarriorParty')
-  .controller('createPartyCtrl', function ($scope, $http, $rootScope) {
+  .controller('createPartyCtrl', function ($scope, $http, $rootScope,$location) {
   	$scope.online = function(nomParty, estatParty){
   		$http.post("../api/onlineParty", {nom:nomParty,estat:estatParty})
   			.success(function(data){
@@ -49,6 +49,10 @@ angular.module('horrorWarriorParty')
                     $scope.response = JSON.parse(data);
                     alert($scope.response["msg"])
                 })
+    }
+    $scope.joinParty = function(nom){
+        $rootScope.nomParty = nom;
+        $location.path("viewParty");
     }
     $scope.refresca();
     
