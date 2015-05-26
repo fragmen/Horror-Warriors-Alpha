@@ -1,0 +1,719 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>webservice &mdash; HorrorWarriors 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="HorrorWarriors 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HorrorWarriors 1.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for webservice</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;joaquin&#39;</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">cherrypy</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pymongo</span>
+<span class="kn">from</span> <span class="nn">bson.objectid</span> <span class="kn">import</span> <span class="n">ObjectId</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">md5</span>
+
+<div class="viewcode-block" id="HorrorWarriors"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors">[docs]</a><span class="k">class</span> <span class="nc">HorrorWarriors</span><span class="p">:</span>
+
+    <span class="n">exposed</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">hw</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jugadors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">jugadors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">personatges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">personatges</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bestiari</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">bestiari</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heroes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">heroes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">partida</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">partida</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">combat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">terreny</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">terreny</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">armes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">armes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">armadures</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">armadures</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.login"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.login">[docs]</a>    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Funcio que serveix per logarnos i en cas de que no existeixi el usuari, el crea.</span>
+<span class="sd">        Accepta els parametres de nick password, que desara encriptat i el bolea de si es master o no</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+
+            <span class="n">nick</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;nick&quot;</span><span class="p">])</span>
+            <span class="n">password</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;password&quot;</span><span class="p">])</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">master</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;master&quot;</span><span class="p">])</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">master</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">))</span>
+            <span class="n">password</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+            <span class="k">print</span> <span class="s">&quot;&quot;&quot;Despres de agafar les dades&quot;&quot;&quot;</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">nick_db</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jugadors</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s">&quot;nick&quot;</span><span class="p">:</span><span class="n">nick</span><span class="p">}))</span>
+                <span class="n">nick_db</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">nick_db</span><span class="p">[</span><span class="s">&quot;nick&quot;</span><span class="p">])</span>
+                <span class="n">password_db</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jugadors</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s">&quot;password&quot;</span><span class="p">:</span><span class="n">password</span><span class="p">}))</span>
+                <span class="n">password_db</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">password_db</span><span class="p">[</span><span class="s">&quot;password&quot;</span><span class="p">])</span>
+                <span class="k">print</span> <span class="s">&quot;&quot;&quot;Apunt de comprpbar el jugador&quot;&quot;&quot;</span>
+
+                <span class="k">if</span><span class="p">(</span><span class="n">nick_db</span> <span class="o">==</span> <span class="n">nick</span> <span class="ow">and</span> <span class="n">password_db</span> <span class="o">==</span> <span class="n">password</span><span class="p">):</span>
+                    <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jugadors</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s">&quot;nick&quot;</span><span class="p">:</span><span class="n">nick</span><span class="p">})</span>
+                    <span class="n">nick</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jugadors</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s">&quot;nick&quot;</span><span class="p">:</span><span class="n">nick</span><span class="p">},{</span><span class="s">&quot;nick&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;Ok&quot;</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;S&#39;ha trobat el jugador&quot;</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;uid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uid</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;nick&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">nick</span><span class="p">[</span><span class="s">&quot;nick&quot;</span><span class="p">])</span>
+                    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="p">)</span>
+
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;&quot;No s&#39;ha trobat el jugadpr&quot;&quot;&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">master</span><span class="o">==</span><span class="bp">True</span><span class="p">):</span>
+                    <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jugadors</span><span class="o">.</span><span class="n">save</span><span class="p">(</span> <span class="p">{</span><span class="s">&quot;password&quot;</span><span class="p">:</span><span class="n">password</span><span class="p">,</span><span class="s">&quot;nick&quot;</span><span class="p">:</span><span class="n">nick</span><span class="p">,</span><span class="s">&quot;estat&quot;</span><span class="p">:</span><span class="s">&quot;en espera&quot;</span><span class="p">,</span> <span class="s">&quot;exp&quot;</span><span class="p">:</span><span class="mi">0</span> <span class="p">,</span><span class="s">&quot;master&quot;</span><span class="p">:</span><span class="n">master</span><span class="p">})</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jugadors</span><span class="o">.</span><span class="n">save</span><span class="p">(</span> <span class="p">{</span><span class="s">&quot;password&quot;</span><span class="p">:</span><span class="n">password</span><span class="p">,</span><span class="s">&quot;nick&quot;</span><span class="p">:</span><span class="n">nick</span><span class="p">,</span><span class="s">&quot;estat&quot;</span><span class="p">:</span><span class="s">&quot;en espera&quot;</span><span class="p">,</span> <span class="s">&quot;exp&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+                <span class="n">jugador</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jugadors</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span> <span class="p">{</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="n">uid</span><span class="p">}</span> <span class="p">)</span>
+                <span class="c"># transformem el _id en string per que sigui JSON-serializable (si no, dona error)</span>
+                <span class="n">jugador</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+                <span class="c"># retornem dades d&#39;usuari</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;OK&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;S&#39;ha creat el jugador exitosament&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;uid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">jugador</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">])</span>
+                <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;Error&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;Les dades no son correctes&quot;</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">)</span>
+</div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.esMaster"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.esMaster">[docs]</a>    <span class="k">def</span> <span class="nf">esMaster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        comprva si la id del jugador que enviem es de un Master o no, ens serveix en la plana principal</span>
+<span class="sd">        homeLayout per filtar les opcions depenent aquest origen</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">])</span>
+            <span class="n">master</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jugadors</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="n">ObjectId</span><span class="p">(</span><span class="nb">id</span><span class="p">)})</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">master</span><span class="p">[</span><span class="s">&quot;master&quot;</span><span class="p">]</span><span class="o">==</span><span class="bp">True</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;master&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">)</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;master&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">)</span>
+</div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.createMap"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.createMap">[docs]</a>    <span class="k">def</span> <span class="nf">createMap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Desa les dades del mapa i la id del master com a relacio</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+
+            <span class="nb">id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">])</span>
+            <span class="n">mapName</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;mapName&quot;</span><span class="p">])</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;col&quot;</span><span class="p">])</span>
+            <span class="n">fil</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;fil&quot;</span><span class="p">])</span>
+            <span class="n">background</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;background&quot;</span><span class="p">])</span>
+
+            <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">terreny</span><span class="o">.</span><span class="n">save</span><span class="p">({</span><span class="s">&quot;id_master&quot;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span> <span class="s">&quot;mapName&quot;</span><span class="p">:</span> <span class="n">mapName</span><span class="p">,</span> <span class="s">&quot;col&quot;</span><span class="p">:</span> <span class="n">col</span><span class="p">,</span> <span class="s">&quot;fil&quot;</span><span class="p">:</span> <span class="n">fil</span><span class="p">,</span> <span class="s">&quot;background&quot;</span><span class="p">:</span> <span class="n">background</span><span class="p">})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Ok&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Ha guadat el mapa amb exit&quot;</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;El mapa no ha guardat correctament&quot;</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">)</span>
+</div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.createBeast"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.createBeast">[docs]</a>    <span class="k">def</span> <span class="nf">createBeast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keywargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Desa les dades de la criatura i els seus atributs amb la id de relació amb el master</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            <span class="n">id_master</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;id_master&quot;</span><span class="p">])</span>
+            <span class="n">nom</span> <span class="o">=</span> <span class="nb">str</span> <span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">])</span>
+            <span class="n">avatar</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;avatar&quot;</span><span class="p">])</span>
+            <span class="n">live</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;live&quot;</span><span class="p">])</span>
+            <span class="n">force</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;force&quot;</span><span class="p">])</span>
+            <span class="n">agility</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;agility&quot;</span><span class="p">])</span>
+            <span class="n">defense</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;defense&quot;</span><span class="p">])</span>
+
+            <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestiari</span><span class="o">.</span><span class="n">save</span><span class="p">({</span><span class="s">&quot;id_master&quot;</span><span class="p">:</span><span class="n">id_master</span><span class="p">,</span><span class="s">&quot;nom&quot;</span><span class="p">:</span><span class="n">nom</span><span class="p">,</span><span class="s">&quot;avatar&quot;</span><span class="p">:</span><span class="n">avatar</span><span class="p">,</span><span class="s">&quot;live&quot;</span><span class="p">:</span><span class="n">live</span><span class="p">,</span><span class="s">&quot;force&quot;</span><span class="p">:</span><span class="n">force</span><span class="p">,</span><span class="s">&quot;agility&quot;</span><span class="p">:</span><span class="n">agility</span><span class="p">,</span><span class="s">&quot;defense&quot;</span><span class="p">:</span><span class="n">defense</span><span class="p">})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;OK&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;Les dades s&#39;han guardat correctament&quot;&quot;&quot;</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Error&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;&quot;&quot;No s&#39;han passat les dades correctament&quot;&quot;&quot;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">)</span>
+</div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.loadBeast"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.loadBeast">[docs]</a>    <span class="k">def</span> <span class="nf">loadBeast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keywargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        carrega tot els atributs de la bestia la qual pasem la Id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            <span class="n">id_master</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;id_master&quot;</span><span class="p">])</span>
+            <span class="n">besties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestiari</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&quot;id_master&quot;</span><span class="p">:</span><span class="n">id_master</span><span class="p">},{</span><span class="s">&quot;nom&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">})</span>
+            <span class="n">besties_array</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">best</span> <span class="ow">in</span> <span class="n">besties</span><span class="p">:</span>
+                <span class="n">best</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">])</span>
+                <span class="n">besties_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Ok&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;S&#39;han carregat les dades&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">besties_array</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;No tens encara cap mostre disponible!&quot;&quot;&quot;</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+</div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.listBeast"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.listBeast">[docs]</a>    <span class="k">def</span> <span class="nf">listBeast</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Carrega les dades de totes les besties del Master que li pasem la id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            <span class="n">id_master</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;id_master&quot;</span><span class="p">])</span>
+            <span class="n">besties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestiari</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&quot;id_master&quot;</span><span class="p">:</span><span class="n">id_master</span><span class="p">},{</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">})</span>
+            <span class="n">besties_array</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">best</span> <span class="ow">in</span> <span class="n">besties</span><span class="p">:</span>
+                <span class="n">best</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">])</span>
+                <span class="n">besties_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Ok&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;S&#39;han carregat les dades&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">besties_array</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;No tens encara cap mostre disponible!&quot;&quot;&quot;</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+    </div>
+    <span class="sd">&quot;&quot;&quot; Opcions del Jugador normal&quot;&quot;&quot;</span>
+    
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.createHeroe"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.createHeroe">[docs]</a>    <span class="k">def</span> <span class="nf">createHeroe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keywargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Desa les dades del Heroi que hem introduit al formulari i el relaciona amb la id del Master</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            <span class="n">id_jugador</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;id_jugador&quot;</span><span class="p">])</span>
+            <span class="n">nom</span> <span class="o">=</span> <span class="nb">str</span> <span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">])</span>
+            <span class="n">avatar</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;avatar&quot;</span><span class="p">])</span>
+            <span class="n">live</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;live&quot;</span><span class="p">])</span>
+            <span class="n">force</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;force&quot;</span><span class="p">])</span>
+            <span class="n">agility</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;agility&quot;</span><span class="p">])</span>
+ 
+            
+
+            <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heroes</span><span class="o">.</span><span class="n">save</span><span class="p">({</span><span class="s">&quot;id_jugador&quot;</span><span class="p">:</span><span class="n">id_jugador</span><span class="p">,</span><span class="s">&quot;nom&quot;</span><span class="p">:</span><span class="n">nom</span><span class="p">,</span><span class="s">&quot;avatar&quot;</span><span class="p">:</span><span class="n">avatar</span><span class="p">,</span><span class="s">&quot;live&quot;</span><span class="p">:</span><span class="n">live</span><span class="p">,</span><span class="s">&quot;force&quot;</span><span class="p">:</span><span class="n">force</span><span class="p">,</span><span class="s">&quot;agility&quot;</span><span class="p">:</span><span class="n">agility</span><span class="p">})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;OK&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;Les dades s&#39;han guardat correctament&quot;&quot;&quot;</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Error&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;&quot;&quot;No s&#39;han passat les dades correctament&quot;&quot;&quot;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">)</span>
+</div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.loadHeroes"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.loadHeroes">[docs]</a>    <span class="k">def</span> <span class="nf">loadHeroes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keywargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Llista tots els herois del Jugador</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            <span class="n">id_jugador</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;id_jugador&quot;</span><span class="p">])</span>
+            <span class="n">heroes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heroes</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&quot;id_jugador&quot;</span><span class="p">:</span><span class="n">id_jugador</span><span class="p">},{</span><span class="s">&quot;nom&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+            <span class="n">heroes_array</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">hero</span> <span class="ow">in</span> <span class="n">heroes</span><span class="p">:</span>
+                <span class="n">hero</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">hero</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">])</span>
+                <span class="n">hero</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">hero</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">])</span>
+                <span class="n">heroes_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hero</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Ok&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;S&#39;han carregat les dades&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">heroes_array</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;No tens encara cap Heroi disponible!&quot;&quot;&quot;</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+        </div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.loadHeroe"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.loadHeroe">[docs]</a>    <span class="k">def</span> <span class="nf">loadHeroe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Llista els atributs del Heroi en questio</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            <span class="n">id_heroe</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;id_heroe&quot;</span><span class="p">])</span>
+            
+            <span class="n">heroes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heroes</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="n">ObjectId</span><span class="p">(</span><span class="n">id_heroe</span><span class="p">)})</span>
+            <span class="n">heroes</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">heroes</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OK&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Les dades del Heroe han carregat correctament&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">heroes</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+            
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Les dades del Heroe no es troben&quot;</span>
+            
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+        
+        </div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.listHeroes"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.listHeroes">[docs]</a>    <span class="k">def</span> <span class="nf">listHeroes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Llista tots els herois del Jugador</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            <span class="n">id_jugador</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;id_jugador&quot;</span><span class="p">])</span>
+            <span class="n">heroes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heroes</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&quot;id_jugador&quot;</span><span class="p">:</span><span class="n">id_jugador</span><span class="p">})</span>
+            <span class="n">heroes_array</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">hero</span> <span class="ow">in</span> <span class="n">heroes</span><span class="p">:</span>
+                <span class="n">hero</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">hero</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">])</span>
+                <span class="n">hero</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">hero</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">])</span>
+                <span class="n">heroes_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hero</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Ok&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;S&#39;han carregat les dades&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">heroes_array</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;No tens encara cap Heroi disponible!&quot;&quot;&quot;</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+        </div>
+<div class="viewcode-block" id="HorrorWarriors.relacionsHerois"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.relacionsHerois">[docs]</a>    <span class="k">def</span> <span class="nf">relacionsHerois</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_heroe</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Busca si exiteixen relaion de partides on aquest heroi estiges subscrit, si es el cas, les elimina</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">heroi_array</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">partida</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">partida</span><span class="o">.</span><span class="n">find</span><span class="p">({},{</span><span class="s">&quot;herois&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+            <span class="k">for</span> <span class="n">party</span> <span class="ow">in</span> <span class="n">partida</span><span class="p">:</span>
+                <span class="n">tmp</span> <span class="o">=</span> <span class="n">party</span>
+                <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">party</span><span class="p">[</span><span class="s">&quot;herois&quot;</span><span class="p">]:</span>
+                        
+                    <span class="k">if</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">(</span><span class="n">id_heroe</span><span class="p">)):</span>
+                        <span class="n">heroi_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+                        <span class="nb">id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">]);</span>
+                            
+                    
+                <span class="bp">self</span><span class="o">.</span><span class="n">partida</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="n">ObjectId</span><span class="p">(</span><span class="nb">id</span><span class="p">)},{</span><span class="s">&#39;$set&#39;</span><span class="p">:{</span><span class="s">&quot;herois&quot;</span><span class="p">:</span><span class="n">heroi_array</span><span class="p">}})</span>
+
+            <span class="k">return</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                 
+        <span class="k">except</span><span class="p">:</span>
+                
+            <span class="k">return</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+            </div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.dropHeroe"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.dropHeroe">[docs]</a>    <span class="k">def</span> <span class="nf">dropHeroe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            <span class="n">id_heroe</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;id_heroe&quot;</span><span class="p">])</span>
+            <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">relacionsHerois</span><span class="p">(</span><span class="n">id_heroe</span><span class="p">)</span><span class="o">==</span><span class="bp">True</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Els heroi s&#39;ha borrat correctament incloint les relacions&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Els heroi s&#39;ha borrat correctament&quot;</span>
+                
+            <span class="bp">self</span><span class="o">.</span><span class="n">heroes</span><span class="o">.</span><span class="n">remove</span><span class="p">({</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="n">ObjectId</span><span class="p">(</span><span class="n">id_heroe</span><span class="p">)})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OK&quot;</span>
+            
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+            
+            
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;No s&#39;ha trobat el jugador a la BD de Mongo&quot;</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+    
+    
+    
+    </div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.createParty"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.createParty">[docs]</a>    <span class="k">def</span> <span class="nf">createParty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            
+            <span class="n">id_jugador</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;master_id&quot;</span><span class="p">])</span>
+            <span class="n">nom</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">])</span>
+            <span class="n">pas</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;pass&quot;</span><span class="p">])</span>
+            <span class="n">maxper</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;maxper&quot;</span><span class="p">])</span>
+            <span class="n">idioma</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;idioma&quot;</span><span class="p">])</span>
+            <span class="k">print</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span><span class="n">nom</span><span class="p">,</span><span class="n">pas</span><span class="p">,</span><span class="n">maxper</span><span class="p">,</span><span class="n">idioma</span><span class="p">)</span>
+            
+            <span class="n">master</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jugadors</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="n">ObjectId</span><span class="p">(</span><span class="n">id_jugador</span><span class="p">)})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">partida</span><span class="o">.</span><span class="n">save</span><span class="p">({</span><span class="s">&quot;id_master&quot;</span><span class="p">:</span><span class="n">id_jugador</span><span class="p">,</span><span class="s">&quot;nom&quot;</span><span class="p">:</span><span class="n">nom</span><span class="p">,</span> <span class="s">&quot;pass&quot;</span><span class="p">:</span><span class="n">pas</span><span class="p">,</span> <span class="s">&quot;maxper&quot;</span><span class="p">:</span><span class="n">maxper</span><span class="p">,</span><span class="s">&quot;cua&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&quot;idioma&quot;</span><span class="p">:</span><span class="n">idioma</span><span class="p">,</span> <span class="s">&quot;online&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OK&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;S&#39;han guardat les dades d el apartida correctament&quot;&quot;&quot;</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+                
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;Aquest usuari no pot crear partida&quot;&quot;&quot;</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+</div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.loadPartys"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.loadPartys">[docs]</a>    <span class="k">def</span> <span class="nf">loadPartys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keywargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            <span class="n">id_jugador</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;id_jugador&quot;</span><span class="p">])</span>
+            <span class="n">partys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">partida</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&quot;id_master&quot;</span><span class="p">:</span><span class="n">id_jugador</span><span class="p">})</span>
+            <span class="n">partys_array</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">party</span> <span class="ow">in</span> <span class="n">partys</span><span class="p">:</span>
+                <span class="n">party</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">party</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">])</span>
+                <span class="n">party</span><span class="p">[</span><span class="s">&quot;maxper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">party</span><span class="p">[</span><span class="s">&quot;maxper&quot;</span><span class="p">])</span>
+                <span class="n">party</span><span class="p">[</span><span class="s">&quot;online&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">party</span><span class="p">[</span><span class="s">&quot;online&quot;</span><span class="p">])</span>
+                <span class="n">party</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">party</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">])</span>
+                <span class="n">partys_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">party</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Ok&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;S&#39;han carregat les dades&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">partys_array</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;No tens encara cap Partida disponible!&quot;&quot;&quot;</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+    </div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.onlineParty"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.onlineParty">[docs]</a>    <span class="k">def</span> <span class="nf">onlineParty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            <span class="n">nom</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">])</span>
+            <span class="n">estat</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;estat&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">partida</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s">&quot;nom&quot;</span><span class="p">:</span><span class="n">nom</span><span class="p">})</span>
+            <span class="n">estat2</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">estat</span><span class="o">==</span><span class="s">&quot;True&quot;</span><span class="p">):</span>
+                <span class="n">estat2</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">estat</span> <span class="o">==</span> <span class="s">&quot;False&quot;</span> <span class="p">):</span>
+                <span class="n">estat2</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">partida</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&quot;nom&quot;</span><span class="p">:</span><span class="n">nom</span><span class="p">},{</span><span class="s">&#39;$set&#39;</span><span class="p">:{</span><span class="s">&quot;online&quot;</span><span class="p">:</span><span class="n">estat2</span><span class="p">}})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OK&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;El estat de la partida ara es </span><span class="si">%s</span><span class="s">&quot;&quot;&quot;</span><span class="p">,(</span><span class="n">estat2</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;estat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">estat2</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;El estat de la partida sense modificar&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;estat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">estat2</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+</div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.listParty"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.listParty">[docs]</a>    <span class="k">def</span> <span class="nf">listParty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">valor</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">partides</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">partida</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&quot;online&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">})</span>
+            <span class="n">partides_array</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">partides</span><span class="p">:</span>
+                <span class="n">part</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">part</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">])</span>
+                <span class="n">part</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">part</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">])</span>
+                <span class="n">part</span><span class="p">[</span><span class="s">&quot;online&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">part</span><span class="p">[</span><span class="s">&quot;online&quot;</span><span class="p">])</span>
+                <span class="n">part</span><span class="p">[</span><span class="s">&quot;maxper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">part</span><span class="p">[</span><span class="s">&quot;maxper&quot;</span><span class="p">])</span>
+                <span class="n">part</span><span class="p">[</span><span class="s">&quot;pass&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">part</span><span class="p">[</span><span class="s">&quot;pass&quot;</span><span class="p">])</span>
+                <span class="n">idMaster</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">part</span><span class="p">[</span><span class="s">&quot;id_master&quot;</span><span class="p">])</span>
+                <span class="n">nomMaster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jugadors</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="n">ObjectId</span><span class="p">(</span><span class="n">idMaster</span><span class="p">)})</span>
+                <span class="n">nomMaster</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">nomMaster</span><span class="p">[</span><span class="s">&quot;nick&quot;</span><span class="p">])</span>
+                <span class="k">print</span> <span class="n">nomMaster</span>
+                <span class="n">part</span><span class="p">[</span><span class="s">&quot;master&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nomMaster</span>
+                <span class="n">partides_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+                    
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OK&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Les dades s&#39;han carregat estupendament&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">partides_array</span> 
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Les dades no s&#39;han pogut consultar&quot;</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+    </div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.joinParty"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.joinParty">[docs]</a>    <span class="k">def</span> <span class="nf">joinParty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+          
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            <span class="n">nom_p</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">])</span>
+            <span class="n">id_jugador</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;id_jugador&quot;</span><span class="p">])</span>
+            <span class="n">id_heroi</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;id_heroi&quot;</span><span class="p">])</span>
+            <span class="n">partida</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">partida</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s">&quot;nom&quot;</span><span class="p">:</span><span class="n">nom_p</span><span class="p">},{</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">})</span>
+            <span class="n">jugadors_array</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">herois_array</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;&quot;DADES BEN PASADES&quot;&quot;&quot;</span><span class="p">)</span>
+            
+            <span class="k">if</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">partida</span><span class="p">[</span><span class="s">&quot;cua&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="nb">int</span><span class="p">(</span><span class="n">partida</span><span class="p">[</span><span class="s">&quot;maxper&quot;</span><span class="p">]))):</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">partida</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;jugadors&quot;</span><span class="p">)):</span>
+                    <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">partida</span><span class="p">[</span><span class="s">&quot;jugadors&quot;</span><span class="p">]:</span>
+                        <span class="k">if</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">part</span><span class="p">)</span><span class="o">==</span><span class="n">id_jugador</span><span class="p">):</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span><span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;El jugador ja esta inscrit amb anterioritat&quot;</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">partida</span>
+                            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+                        
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">jugadors_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">part</span><span class="p">))</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">partida</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;herois&quot;</span><span class="p">)):</span>            
+                    <span class="k">for</span> <span class="n">parth</span> <span class="ow">in</span> <span class="n">partida</span><span class="p">[</span><span class="s">&quot;herois&quot;</span><span class="p">]:</span>
+                        <span class="k">if</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">parth</span><span class="p">)</span><span class="o">==</span><span class="n">id_heroi</span><span class="p">):</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span><span class="o">=</span> <span class="s">&quot;Error2&quot;</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;El heroi ja esta inscrit amb anterioritat&quot;</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">partida</span>
+                            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">herois_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">parth</span><span class="p">))</span>
+                
+                <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;&quot;CHICA FORA!!&quot;&quot;&quot;</span><span class="p">)</span>
+                
+                <span class="n">partida</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">partida</span><span class="p">[</span><span class="s">&quot;nom&quot;</span><span class="p">])</span>
+                <span class="n">partida</span><span class="p">[</span><span class="s">&quot;online&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">partida</span><span class="p">[</span><span class="s">&quot;online&quot;</span><span class="p">])</span>
+                <span class="n">partida</span><span class="p">[</span><span class="s">&quot;maxper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">partida</span><span class="p">[</span><span class="s">&quot;maxper&quot;</span><span class="p">])</span>
+                <span class="n">partida</span><span class="p">[</span><span class="s">&quot;pass&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">partida</span><span class="p">[</span><span class="s">&quot;pass&quot;</span><span class="p">])</span>
+                <span class="n">idMaster</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">partida</span><span class="p">[</span><span class="s">&quot;id_master&quot;</span><span class="p">])</span>
+                <span class="n">nomMaster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jugadors</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s">&quot;_id&quot;</span><span class="p">:</span><span class="n">ObjectId</span><span class="p">(</span><span class="n">idMaster</span><span class="p">)})</span>
+                <span class="n">nomMaster</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">nomMaster</span><span class="p">[</span><span class="s">&quot;nick&quot;</span><span class="p">])</span>
+                    
+                <span class="n">cua</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">partida</span><span class="p">[</span><span class="s">&quot;cua&quot;</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span>
+                <span class="n">partida</span><span class="p">[</span><span class="s">&quot;id_master&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nomMaster</span>
+                       
+                
+                <span class="n">jugadors_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">id_jugador</span><span class="p">))</span>
+                <span class="n">herois_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">id_heroi</span><span class="p">))</span>
+                <span class="n">partida</span><span class="p">[</span><span class="s">&quot;jugadors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">jugadors_array</span>
+                <span class="n">partida</span><span class="p">[</span><span class="s">&quot;herois&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">herois_array</span>
+
+                    
+                <span class="bp">self</span><span class="o">.</span><span class="n">partida</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&quot;nom&quot;</span><span class="p">:</span><span class="n">nom_p</span><span class="p">},{</span><span class="s">&#39;$set&#39;</span><span class="p">:{</span><span class="s">&quot;cua&quot;</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">cua</span><span class="p">)}})</span>
+                    
+                <span class="bp">self</span><span class="o">.</span><span class="n">partida</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&quot;nom&quot;</span><span class="p">:</span><span class="n">nom_p</span><span class="p">},{</span><span class="s">&#39;$set&#39;</span><span class="p">:{</span><span class="s">&quot;jugadors&quot;</span><span class="p">:</span><span class="n">jugadors_array</span><span class="p">,</span><span class="s">&quot;herois&quot;</span><span class="p">:</span><span class="n">herois_array</span><span class="p">}})</span>
+                   
+                    
+                <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OK&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Unit a la partida correctament&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">partida</span>
+                <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;No queda lloc per la partida&quot;</span>
+                <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Error a la funcio del webservice de joinParty&quot;</span>
+            <span class="k">print</span> <span class="s">&quot;ERROR desconegut: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+    
+    </div>
+    <span class="nd">@cherrypy.expose</span>
+    <span class="nd">@cherrypy.tools.json_out</span><span class="p">()</span>
+    <span class="nd">@cherrypy.tools.json_in</span><span class="p">()</span>
+<div class="viewcode-block" id="HorrorWarriors.viewParty"><a class="viewcode-back" href="../webservice.html#webservice.HorrorWarriors.viewParty">[docs]</a>    <span class="k">def</span> <span class="nf">viewParty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span><span class="p">(</span><span class="mi">1</span><span class="o">==</span><span class="mi">1</span><span class="p">):</span>
+    
+            <span class="n">dades_in</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+            <span class="n">nomParty</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dades_in</span><span class="p">[</span><span class="s">&quot;nomParty&quot;</span><span class="p">])</span>
+            <span class="n">partida</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">partida</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s">&quot;nom&quot;</span><span class="p">:</span><span class="n">nomParty</span><span class="p">})</span>
+            <span class="n">partida</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">partida</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">])</span>
+            <span class="n">jugadors_array_Oj</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">herois_array_Oj</span> <span class="o">=</span> <span class="p">[]</span>
+            
+            <span class="n">jugadors_array</span> <span class="o">=</span> <span class="n">partida</span><span class="p">[</span><span class="s">&quot;jugadors&quot;</span><span class="p">]</span>
+            <span class="n">herois_array</span> <span class="o">=</span> <span class="n">partida</span><span class="p">[</span><span class="s">&quot;herois&quot;</span><span class="p">]</span>
+            
+            <span class="k">for</span> <span class="n">jugador</span> <span class="ow">in</span> <span class="n">jugadors_array</span><span class="p">:</span>
+                <span class="n">jugador</span> <span class="o">=</span> <span class="n">ObjectId</span><span class="p">(</span><span class="n">jugador</span><span class="p">)</span>
+                <span class="k">print</span> <span class="n">jugador</span>
+                <span class="n">jugadors_array_Oj</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">jugador</span><span class="p">)</span>
+            
+            <span class="k">for</span> <span class="n">herois</span> <span class="ow">in</span> <span class="n">herois_array</span><span class="p">:</span>
+                <span class="n">herois</span> <span class="o">=</span> <span class="n">ObjectId</span><span class="p">(</span><span class="n">herois</span><span class="p">)</span>
+                <span class="k">print</span> <span class="n">herois</span>
+                <span class="n">herois_array_Oj</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">herois</span><span class="p">)</span>
+                
+            <span class="k">print</span> <span class="n">jugadors_array_Oj</span>
+            <span class="k">print</span> <span class="n">herois_array_Oj</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;S&#39;han trobat les seguents dades&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OK&quot;</span>
+            <span class="n">jugadors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jugadors</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&quot;_id&quot;</span><span class="p">:{</span><span class="s">&quot;$in&quot;</span><span class="p">:</span><span class="n">jugadors_array_Oj</span><span class="p">}})</span>
+            <span class="n">herois</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heroes</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&quot;_id&quot;</span><span class="p">:{</span><span class="s">&quot;$in&quot;</span><span class="p">:</span><span class="n">herois_array_Oj</span><span class="p">}})</span>
+            <span class="n">herois_array</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">jugadors_array</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">hero</span> <span class="ow">in</span> <span class="n">herois</span><span class="p">:</span>
+                <span class="n">hero</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">hero</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">])</span>
+                <span class="n">herois_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hero</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">juga</span> <span class="ow">in</span> <span class="n">jugadors</span><span class="p">:</span>
+                <span class="n">juga</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">juga</span><span class="p">[</span><span class="s">&quot;_id&quot;</span><span class="p">])</span>
+                <span class="n">jugadors_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">juga</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;herois&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">herois_array</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">[</span><span class="s">&quot;jugadors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">jugadors_array</span><span class="p">)</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resposta</span><span class="p">))</span>
+            
+        <span class="k">else</span><span class="p">:</span>
+            
+            <span class="k">print</span> <span class="s">&quot;ERROR desconegut: &quot;</span>
+            <span class="k">return</span> <span class="s">&quot;ERROR desconegut: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+        
+
+        </div></div>
+<span class="n">application</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">Application</span><span class="p">(</span><span class="n">HorrorWarriors</span><span class="p">(),</span> <span class="n">script_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, joaquin montoliu and ferran massafret.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.4</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

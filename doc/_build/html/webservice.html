@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>webservice module &mdash; HorrorWarriors 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="HorrorWarriors 1.0 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">HorrorWarriors 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-webservice">
+<span id="webservice-module"></span><h1>webservice module<a class="headerlink" href="#module-webservice" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="webservice.HorrorWarriors">
+<em class="property">class </em><code class="descclassname">webservice.</code><code class="descname">HorrorWarriors</code><a class="reference internal" href="_modules/webservice.html#HorrorWarriors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="webservice.HorrorWarriors.createBeast">
+<code class="descname">createBeast</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.createBeast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.createBeast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Desa les dades de la criatura i els seus atributs amb la id de relació amb el master</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.createHeroe">
+<code class="descname">createHeroe</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.createHeroe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.createHeroe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Desa les dades del Heroi que hem introduit al formulari i el relaciona amb la id del Master</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.createMap">
+<code class="descname">createMap</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.createMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.createMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Desa les dades del mapa i la id del master com a relacio</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.createParty">
+<code class="descname">createParty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.createParty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.createParty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.dropHeroe">
+<code class="descname">dropHeroe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.dropHeroe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.dropHeroe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.esMaster">
+<code class="descname">esMaster</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.esMaster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.esMaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>comprva si la id del jugador que enviem es de un Master o no, ens serveix en la plana principal
+homeLayout per filtar les opcions depenent aquest origen</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="webservice.HorrorWarriors.exposed">
+<code class="descname">exposed</code><em class="property"> = True</em><a class="headerlink" href="#webservice.HorrorWarriors.exposed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.joinParty">
+<code class="descname">joinParty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.joinParty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.joinParty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.listBeast">
+<code class="descname">listBeast</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.listBeast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.listBeast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Carrega les dades de totes les besties del Master que li pasem la id</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.listHeroes">
+<code class="descname">listHeroes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.listHeroes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.listHeroes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Llista tots els herois del Jugador</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.listParty">
+<code class="descname">listParty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.listParty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.listParty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.loadBeast">
+<code class="descname">loadBeast</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.loadBeast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.loadBeast" title="Permalink to this definition">¶</a></dt>
+<dd><p>carrega tot els atributs de la bestia la qual pasem la Id</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.loadHeroe">
+<code class="descname">loadHeroe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.loadHeroe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.loadHeroe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Llista els atributs del Heroi en questio</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.loadHeroes">
+<code class="descname">loadHeroes</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.loadHeroes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.loadHeroes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Llista tots els herois del Jugador</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.loadPartys">
+<code class="descname">loadPartys</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.loadPartys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.loadPartys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.login">
+<code class="descname">login</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Funcio que serveix per logarnos i en cas de que no existeixi el usuari, el crea.
+Accepta els parametres de nick password, que desara encriptat i el bolea de si es master o no</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.onlineParty">
+<code class="descname">onlineParty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.onlineParty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.onlineParty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.relacionsHerois">
+<code class="descname">relacionsHerois</code><span class="sig-paren">(</span><em>id_heroe</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.relacionsHerois"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.relacionsHerois" title="Permalink to this definition">¶</a></dt>
+<dd><p>Busca si exiteixen relaion de partides on aquest heroi estiges subscrit, si es el cas, les elimina</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="webservice.HorrorWarriors.viewParty">
+<code class="descname">viewParty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/webservice.html#HorrorWarriors.viewParty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#webservice.HorrorWarriors.viewParty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/webservice.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, joaquin montoliu and ferran massafret.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.4</a>
+      
+      |
+      <a href="_sources/webservice.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>
