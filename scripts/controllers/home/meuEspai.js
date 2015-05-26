@@ -11,10 +11,12 @@ angular.module('horrorWarriorApp')
             if(data["master"]==true){
                 $rootScope.esMaster = true;
                 $rootScope.esJugador = false;
+                $rootScope.logat=true;
                 
             }else if(data["master"]==false){
                 $rootScope.esMaster = false;
                 $rootScope.esJugador = true;
+                $rootScope.logat=true;
                 $location.path("createHeroe");
             }
             

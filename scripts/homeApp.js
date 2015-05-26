@@ -23,6 +23,11 @@ function direccions($routeProvider){
                 controllerAs: "logonCtrl",
                 templateUrl: "views/home/logon.html"
             })
+        .when("/logout", {
+                controller: "logoutCtrl",
+                controllerAs: "logoutCtrl",
+                templateUrl: "views/home/logout.html"
+        })
         
         .when("/createMaps", {
                 controller: "createMapsCtrl",
