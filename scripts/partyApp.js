@@ -30,6 +30,6 @@ function direccions($routeProvider){
         })
         .otherwise({
         redirectTo: '/'
-      })
+      });
 
 });

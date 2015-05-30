@@ -9,6 +9,8 @@ angular.module('horrorWarriorParty')
               .success( function(data){
                   $scope.response = (JSON.parse(data));-
                   console.log($scope.response["herois"]);
+                  $rootScope.herois = $scope.response["herois"];
+                  $rootScope.jugadors = $scope.response["jugadors"];
                })
                .error( function(data){
                   $scope.response2 = (JSON.parse(data));
@@ -29,7 +31,22 @@ angular.module('horrorWarriorParty')
 
             console.log("Error de conexio a la prova del master");
       });
+            
     };
+    $scope.goToBatle = function(){
+        
+    };
+    $scope.listBeast = function(){
+        var id = readCookie("id");
+        $http.post('../api/listBeast',{id_master:id})
+                .success(function(data){
+                    $scope.besties =   JSON.parse(data);
+                })
+                .error(function(data){
+                    $scope.besties = JSON.parse(data);
+                });
+    };
+    $scope.listBeast();
     setInterval($scope.refresca, 3000);
                   
       });

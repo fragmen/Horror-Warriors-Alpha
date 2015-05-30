@@ -32,9 +32,20 @@
         <div id="bottom"></div>
     </article>
     <article id="calendar_ready">
-        <div id="calendar"></div>
+        <div id="calendar" ng-show="esMaster"> 
+            <table align="center" width="100%">
+                
+            <caption>ELS TEUS MONSTRES</caption>
+            
+            <tr ng-repeat="resp in besties['data']">
+                <td>{{resp['nom']}} </td><td><td>
+                    <input type="checkbox">
+                </td>
+            </tr>
+            </table> 
+        </div>
         <div id="buton_listo">
-            <button id="ready_button" ng-show="esMaster">Ready</button>
+            <button id="ready_button" ng-show="esMaster" ng-click="goToBatle()">Ready</button>
             
         </div>
     </article>
