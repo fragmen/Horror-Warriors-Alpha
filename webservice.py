@@ -622,7 +622,33 @@ class HorrorWarriors:
             
             print "ERROR desconegut: "
             return "ERROR desconegut: "+str(e.__class__.__name__)
-        
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    @cherrypy.tools.json_in()
+    def loadMaps(self):
+        try:
+            dades_in = cherrypy.request.json
+            self.resposta = {}
+            id_master = str(dades_in["id_master"])
+            terrenys = self.terreny.find({"id_master":id_master})
+            terrenys_array = []
+            for t in terrenys:
+                t["_id"] = str(t["_id"])
+                t["col"] = str(t["col"])
+                t["mapName"] = str(t["mapName"])
+                t["background"] = str(t["background"])
+                t["fil"] = str(t["fil"])
+                terrenys_array.append(t)
+            self.resposta["status"]="OK"
+            self.resposta["msg"]="""S'han carregat els mapes correctament"""
+            self.resposta["data"]=terrenys_array
+            return (json.dumps(self.resposta))
 
+        except:
+            self.resposta["status"]="OK"
+            self.resposta["msg"]="""S'han carregat els mapes correctament"""
+            self.resposta["data"]="NULL"
+            return json.dumps(self.resposta)
+        
         
 application = cherrypy.Application(HorrorWarriors(), script_name=None, config=None)

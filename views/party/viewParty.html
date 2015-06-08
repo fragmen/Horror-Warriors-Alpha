@@ -42,6 +42,16 @@
                     <input type="checkbox">
                 </td>
             </tr>
+            </table>
+                
+            <table align="center" width="100%">
+            
+                <caption>ELS TEUS MAPES:</captin>
+            </tr>
+            <tr ng-repeat="map in mapes['data']">
+                <td>Nom:{{map["mapName"]}}</td><td>cols:{{map["col"]}}</td><td>fil:{{map["fil"]}}<input type="checkbox" name="mapa"></td>
+            </tr>
+            
             </table> 
         </div>
         <div id="buton_listo">

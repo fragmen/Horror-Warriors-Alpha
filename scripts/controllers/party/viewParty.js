@@ -46,7 +46,19 @@ angular.module('horrorWarriorParty')
                     $scope.besties = JSON.parse(data);
                 });
     };
+    $scope.listMaps = function(){
+       var id = readCookie("id");
+      $http.post("../api/loadMaps",{id_master:id})
+              .success(function(data){
+                  $scope.mapes = JSON.parse(data);
+      })
+              .error(function(data){
+                  alert(data["msg"]);
+      });
+    };
+    
     $scope.listBeast();
+    $scope.listMaps();
     setInterval($scope.refresca, 3000);
                   
       });
