@@ -15,43 +15,36 @@
                             <option value="Avatar_Orc_Mag.jpg">Orc Mac</option>
                             <option value="Avatar_Orc_Rang.jpg">Orc Rager</option>
                         </select>
-                    </td>
-                </tr>
-        </table>
-            <img src="/dist/images/beast/img/{{avatar}}" width="200px" height="200px" ng-init="avatar='Avatar_Abominacio.jpg'">
-        </div>
-        <div id="besties_inputs">
-            <table id="table_besties_inputs">
-                 <tr>
+                    </td><td><img src="/dist/images/beast/img/{{avatar}}" width="200px" height="200px" ng-init="avatar='Avatar_Abominacio.jpg'"></td>
+                    <td>
+                <table>
+                    <tr>
                     <td>Nom bestia:</td><td><input type="text" ng-model="nom"></td>
+                    </tr>
+                    <tr>
+                        <td>Vida:</td><td><input type="text" value=5 size="5" ng-model="live"></td>
+                    </tr>
+                    <tr>
+                        <td>Força:</td><td><input type="text" value=5 size="5" ng-model="force"></td>
+                    </tr>
+                    <tr>
+                        <td>Agilitat:</td><td><input type="text" value=2 size="5" ng-model="agility"></td>
+                    </tr>
+                    <tr>
+                        <td>Defensa:</td><td><input type="text" value=5 size="5" ng-model="defense"></td>
+                    </tr> 
+                </table>
+                    </td> 
                 </tr>
-                <tr>
-                    <td>Vida:</td><td><input type="text" value=5 size="5" ng-model="live"></td>
-                </tr>
-                <tr>
-                    <td>Força:</td><td><input type="text" value=5 size="5" ng-model="force"></td>
-                </tr>
-                <tr>
-                    <td>Agilitat:</td><td><input type="text" value=2 size="5" ng-model="agility"></td>
-                </tr>
-                <tr>
-                    <td>Defensa:</td><td><input type="text" value=5 size="5" ng-model="defense"></td>
-                </tr>                  
-            </table>
-            <input type="button" ng-click="save()" value="Guardar">
+                <tr ng-repeat="resp in response['data']">
+                    <td colspan="2">{{resp['nom']}} </td><td><p ng-click="eliminarBestia()">eliminar</p></td>
+            </tr>
+        </table>
+            
         </div>
+        
     </article>
     <article id="besties_list">
-         <div id="bestiari">
-            
-            <table border=1 class="banqueta">
-                
-            <caption>ELS TESU MONSTRES</caption>
-            
-            <tr ng-repeat="resp in response['data']">
-                <td>{{resp['nom']}} </td><td><p ng-click="eliminarBestia()">eliminar</p></td>
-            </tr>
-            </table>
-        </div>
+
     </article>
 </section>
